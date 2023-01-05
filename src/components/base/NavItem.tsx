@@ -29,7 +29,7 @@ const NavItem = ({ children, href, theme = 'default' }: Props) => {
     },
     primary: {
       inactive: 'text-white bg-purple-400 rounded-full p-3',
-      active: 'text-purple-400',
+      active: 'text-white',
     },
   };
 
