@@ -10,7 +10,7 @@ const Sidebar = (props: Props) => {
     <div className='flex h-full bg-gray-800 divide-x divide-gray-700'>
       <Navigation />
 
-      <div>Sidebar content</div>
+      <div className='p-5'>Sidebar content</div>
     </div>
   );
 };
