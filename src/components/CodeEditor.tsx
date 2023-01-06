@@ -27,14 +27,24 @@ const CodeEditor = ({ theme }: Props) => {
   }
 
   return (
-    <Editor
-      width='100%'
-      height='90%'
-      defaultLanguage='typescript'
-      defaultValue='// Place your code snippet here'
-      theme={theme ? theme : ThemeOptions.NIGHT_OWL}
-      beforeMount={handleEditorWillMount}
-    />
+    <section className='flex flex-col h-full'>
+      <header className='bg-nightowl-sidebar px-8 py-2'>
+        <p className='font-medium'>
+          tailwind.config<span className='text-white/70'>.js</span>
+        </p>
+      </header>
+
+      <div className='flex-shrink-0 h-full p-4'>
+        <Editor
+          width='100%'
+          height='90%'
+          defaultLanguage='typescript'
+          defaultValue='// Place your code snippet here'
+          theme={theme ? theme : ThemeOptions.NIGHT_OWL}
+          beforeMount={handleEditorWillMount}
+        />
+      </div>
+    </section>
   );
 };
 
