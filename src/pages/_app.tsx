@@ -11,12 +11,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <div className='flex min-h-screen'>
-        <main className='flex flex-grow bg-gray-900 text-white'>
+        <main className='flex flex-grow bg-nightowl-bg text-white'>
           <Sidebar />
 
-          <section>
-            <Component {...pageProps} />
-          </section>
+          <Component {...pageProps} />
         </main>
       </div>
     </>

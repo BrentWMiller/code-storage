@@ -7,10 +7,10 @@ type Props = {};
 
 const Sidebar = (props: Props) => {
   return (
-    <div className='flex h-full bg-gray-800 divide-x divide-gray-700'>
+    <div className='flex h-full bg-nightowl-sidebar divide-x divide-nightowl-bg'>
       <Navigation />
 
-      <div className='p-5'>Sidebar content</div>
+      <div className='p-5 min-w-[240px]'>Sidebar content</div>
     </div>
   );
 };
