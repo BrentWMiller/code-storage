@@ -1,9 +1,15 @@
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { writeTextFile, BaseDirectory, exists, createDir } from '@tauri-apps/api/fs';
 import Editor from '@monaco-editor/react';
-import { writeTextFile, BaseDirectory, exists, createDir, readDir } from '@tauri-apps/api/fs';
+import { toast } from 'react-hot-toast';
+
+// themes
 import { theme as nightOwlTheme } from '../editor-themes/night-owl';
 import { theme as darkulaTheme } from '../editor-themes/darkula';
 import { theme as monokaiTheme } from '../editor-themes/monokai';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+
+// lib
+import { appConfig } from '../lib/config';
 
 declare global {
   interface Window {
@@ -33,8 +39,6 @@ const themeConfigs = {
   [ThemeOptions.DARKULA]: darkulaTheme,
   [ThemeOptions.MONOKAI]: monokaiTheme,
 };
-
-const defaultLanguageId = 'txt';
 
 const CodeEditor = ({ theme }: Props) => {
   const editorRef = useRef(null);
@@ -77,13 +81,14 @@ const CodeEditor = ({ theme }: Props) => {
     const fileValue = editorRef.current.getValue();
 
     // check if directory exists
-    const dirExists = await exists('Code Storage', { dir: BaseDirectory.Home });
+    const dirExists = await exists(appConfig.DEFAULT_BASE_FOLDER, { dir: BaseDirectory.Home });
     if (!dirExists) {
-      await createDir('Code Storage', { dir: BaseDirectory.Home });
+      await createDir(appConfig.DEFAULT_BASE_FOLDER, { dir: BaseDirectory.Home });
     }
 
     // Create file
     try {
+      await writeTextFile(`${appConfig.DEFAULT_BASE_FOLDER}/${fileName}`, fileValue, { dir: BaseDirectory.Home });
       toast.success('File saved successfully');
     } catch (error) {
       console.error(error);
@@ -122,11 +127,11 @@ const CodeEditor = ({ theme }: Props) => {
         </button>
       </header>
 
-      <div className='flex-shrink-0 h-full p-4'>
+      <div className='relative flex-shrink-0 h-full p-4'>
         <Editor
           width='100%'
           height='90%'
-          defaultLanguage={defaultLanguageId}
+          defaultLanguage={appConfig.DEFAULT_LANGUAGE_ID}
           theme={theme ? theme : ThemeOptions.NIGHT_OWL}
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}
