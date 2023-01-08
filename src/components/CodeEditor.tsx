@@ -45,6 +45,7 @@ const CodeEditor = ({ theme }: Props) => {
   const [fileName, setFileName] = useState<string>('');
   const [languages, setLanguages] = useState<MonacoLanguage[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<MonacoLanguage | null>(null);
+  const [currentLanguageIcon, setCurrentLanguageIcon] = useState<string>(`${appConfig.LANGUAGE_ICONS_FOLDER}/default_file.svg`);
 
   function handleEditorWillMount(monaco) {
     const languages = monaco.languages.getLanguages();
@@ -74,6 +75,7 @@ const CodeEditor = ({ theme }: Props) => {
       editorRef.current.updateOptions({ language: language.id });
       window.monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], language.id);
       setCurrentLanguage(language);
+      getLanguageIcon(language);
     }
   };
 
@@ -96,6 +98,34 @@ const CodeEditor = ({ theme }: Props) => {
     }
   };
 
+  const getLanguageIcon = async (language: MonacoLanguage) => {
+    const defaultIcon = `${appConfig.LANGUAGE_ICONS_FOLDER}/default_file.svg`;
+
+    if (!language) {
+      setCurrentLanguageIcon(defaultIcon);
+      return;
+    }
+
+    const extension = language?.extensions?.[0].replace('.', '');
+    let path = `${appConfig.LANGUAGE_ICONS_FOLDER}/${extension || 'default_file'}.svg`;
+    let res = await fetch(path);
+
+    if (res.status !== 404) {
+      console.log('set extension');
+      setCurrentLanguageIcon(path);
+    } else {
+      path = `${appConfig.LANGUAGE_ICONS_FOLDER}/${language?.aliases?.[0] || 'default_file'}.svg`;
+      res = await fetch(path);
+
+      if (res.status !== 404) {
+        console.log('set aliases');
+        setCurrentLanguageIcon(path);
+      } else {
+        setCurrentLanguageIcon(defaultIcon);
+      }
+    }
+  };
+
   useEffect(() => {
     const saveHandler = (e) => {
       if (e.ctrlKey && e.key === 's') {
@@ -113,14 +143,16 @@ const CodeEditor = ({ theme }: Props) => {
   return (
     <section className='flex flex-col h-full'>
       <header className='flex items-center justify-between bg-nightowl-sidebar px-8 py-2'>
-        <input
-          className='bg-transparent appearance-none'
-          placeholder='Name your file...'
-          value={fileName}
-          onChange={(e) => handleFileNameChange(e)}
-        />
+        <div className='flex items-center gap-3'>
+          <img src={currentLanguageIcon} alt={`Logo for ${currentLanguage}`} className='w-4 h-4' />
 
-        {currentLanguage && <p>{(currentLanguage.aliases && currentLanguage.aliases[0]) || currentLanguage.id}</p>}
+          <input
+            className='bg-transparent appearance-none'
+            placeholder='Name your file...'
+            value={fileName}
+            onChange={(e) => handleFileNameChange(e)}
+          />
+        </div>
 
         <button type='button' onClick={() => handleSave()}>
           Save file
