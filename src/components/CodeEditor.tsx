@@ -1,6 +1,5 @@
 import Editor from '@monaco-editor/react';
-import { writeTextFile, BaseDirectory } from '@tauri-apps/api/fs';
-import { appLocalDataDir } from '@tauri-apps/api/path';
+import { writeTextFile, BaseDirectory, exists, createDir, readDir } from '@tauri-apps/api/fs';
 import { theme as nightOwlTheme } from '../editor-themes/night-owl';
 import { theme as darkulaTheme } from '../editor-themes/darkula';
 import { theme as monokaiTheme } from '../editor-themes/monokai';
@@ -39,6 +38,7 @@ const defaultLanguageId = 'txt';
 
 const CodeEditor = ({ theme }: Props) => {
   const editorRef = useRef(null);
+  const [fileName, setFileName] = useState<string>('');
   const [languages, setLanguages] = useState<MonacoLanguage[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<MonacoLanguage | null>(null);
 
@@ -57,6 +57,7 @@ const CodeEditor = ({ theme }: Props) => {
 
   const handleFileNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fileName = e.currentTarget.value;
+    setFileName(fileName);
 
     if (!fileName || !fileName.includes('.')) return;
 
@@ -73,9 +74,20 @@ const CodeEditor = ({ theme }: Props) => {
   };
 
   const handleSave = async () => {
-    const value = editorRef.current.getValue();
-    console.log(value);
-    // await writeTextFile('test-file.js', 'file contents', { dir: BaseDirectory.AppConfig });
+    const fileValue = editorRef.current.getValue();
+
+    // check if directory exists
+    const dirExists = await exists('Code Storage', { dir: BaseDirectory.Home });
+    if (!dirExists) {
+      await createDir('Code Storage', { dir: BaseDirectory.Home });
+    }
+
+    // Create file
+    try {
+      await writeTextFile(`Code Storage/${fileName}`, fileValue, { dir: BaseDirectory.Home });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -95,7 +107,12 @@ const CodeEditor = ({ theme }: Props) => {
   return (
     <section className='flex flex-col h-full'>
       <header className='flex items-center justify-between bg-nightowl-sidebar px-8 py-2'>
-        <input className='bg-transparent appearance-none' placeholder='Name your file...' onChange={(e) => handleFileNameChange(e)} />
+        <input
+          className='bg-transparent appearance-none'
+          placeholder='Name your file...'
+          value={fileName}
+          onChange={(e) => handleFileNameChange(e)}
+        />
 
         {currentLanguage && <p>{(currentLanguage.aliases && currentLanguage.aliases[0]) || currentLanguage.id}</p>}
 
