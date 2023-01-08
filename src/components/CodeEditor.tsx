@@ -84,9 +84,10 @@ const CodeEditor = ({ theme }: Props) => {
 
     // Create file
     try {
-      await writeTextFile(`Code Storage/${fileName}`, fileValue, { dir: BaseDirectory.Home });
+      toast.success('File saved successfully');
     } catch (error) {
       console.error(error);
+      toast.error('Failed to save file');
     }
   };
 
