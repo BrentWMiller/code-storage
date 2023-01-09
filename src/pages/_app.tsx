@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 
 // styles
-import '../style.css';
+import '../styles/globals.css';
 
 // components
 import Sidebar from '../components/global/Sidebar';

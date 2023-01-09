@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @import './fonts.css';
+
+  :root {
+    --vh: 1vh;
+    --true-vh: calc(var(--vh) * 100);
+  }
+
+  html {
+    @apply font-body antialiased;
+  }
+}

@@ -3,6 +3,9 @@ module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}', './src/icons/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        body: ['"FiraCode"', 'monospace'],
+      },
       colors: {
         theme: {
           bg: '#282a36',
