@@ -4,10 +4,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        nightowl: {
-          bg: '#011627',
-          sidebar: '#01101D',
-          divider: '#00060E',
+        theme: {
+          bg: '#282a36',
+          sidebar: '#1E1F29',
+          divider: '#242530',
+        },
+        accent: {
+          blue: '#5394ec',
+          cyan: '#299999',
+          green: '#379c1a',
+          magenta: '#ae8abe',
+          red: '#e74644',
+          yellow: '#dcc457',
         },
       },
     },
