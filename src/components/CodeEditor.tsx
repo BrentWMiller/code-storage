@@ -142,7 +142,7 @@ const CodeEditor = ({ theme }: Props) => {
 
   return (
     <section className='flex flex-col h-full'>
-      <header className='flex items-center justify-between bg-nightowl-sidebar px-8 py-2'>
+      <header className='flex items-center justify-between bg-theme-sidebar px-8 py-2'>
         <div className='flex items-center gap-3'>
           <img src={currentLanguageIcon} alt={`Logo for ${currentLanguage}`} className='w-4 h-4' />
 
@@ -164,7 +164,7 @@ const CodeEditor = ({ theme }: Props) => {
           width='100%'
           height='90%'
           defaultLanguage={appConfig.DEFAULT_LANGUAGE_ID}
-          theme={theme ? theme : ThemeOptions.NIGHT_OWL}
+          theme={theme ? theme : ThemeOptions.DARKULA}
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}
         />
