@@ -3,28 +3,37 @@ import React from 'react';
 // components
 import NavItem from '../base/NavItem';
 import CodeIcon from '../../icons/CodeIcon';
-import RectangleHistoryIcon from '../../icons/RectangleHistoryIcon';
 import PlusIcon from '../../icons/PlusIcon';
+import SettingsIcon from '../../icons/SettingsIcon';
+import ContainerIcon from '../../icons/ContainerIcon';
 
 type Props = {};
 
 const Navigation = (props: Props) => {
   return (
-    <nav>
-      <ul className='flex flex-col gap-7 p-5'>
+    <nav className='flex flex-col justify-between items-center h-screen p-5 w-[80px]'>
+      <ul className='flex flex-col gap-5'>
         <li>
           <NavItem href='/snippets/add' theme='primary'>
-            <PlusIcon className='w-5 h-5' />
+            <PlusIcon className='w-6 h-6' />
           </NavItem>
         </li>
         <li>
           <NavItem href='/'>
-            <RectangleHistoryIcon className='w-5 h-5' />
+            <ContainerIcon className='w-6 h-6' />
           </NavItem>
         </li>
         <li>
           <NavItem href='/snippets'>
-            <CodeIcon className='w-5 h-5' />
+            <CodeIcon className='w-6 h-6' />
+          </NavItem>
+        </li>
+      </ul>
+
+      <ul className='flex flex-col gap-5'>
+        <li>
+          <NavItem href='/settings'>
+            <SettingsIcon className='w-6 h-6' />
           </NavItem>
         </li>
       </ul>

@@ -1,5 +1,7 @@
-function App() {
-  return <section>Dashboard</section>;
-}
+import { NextPage } from 'next';
+
+const App: NextPage = () => {
+  return <section>App</section>;
+};
 
 export default App;

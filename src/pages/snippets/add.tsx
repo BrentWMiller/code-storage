@@ -1,13 +1,15 @@
+import { NextPage } from 'next';
+
 // components
 import CodeEditor from '../../components/CodeEditor';
 import Layout from '../../components/global/Layout';
 
-function SnippetsAddPage() {
+const SnippetsAdd: NextPage = () => {
   return (
     <Layout heading='Add Snippet'>
       <CodeEditor />
     </Layout>
   );
-}
+};
 
-export default SnippetsAddPage;
+export default SnippetsAdd;

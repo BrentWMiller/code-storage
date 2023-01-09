@@ -1,5 +1,7 @@
-function SnippetsPage() {
-  return <section>Snippets</section>;
-}
+import { NextPage } from 'next';
 
-export default SnippetsPage;
+const Snippets: NextPage = () => {
+  return <section>Snippets</section>;
+};
+
+export default Snippets;

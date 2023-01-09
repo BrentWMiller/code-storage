@@ -12,7 +12,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <div className='flex min-h-screen'>
-        <main className='flex flex-grow bg-nightowl-bg text-white'>
+        <main className='flex flex-grow bg-theme-bg text-white'>
           <Sidebar />
 
           <Component {...pageProps} />

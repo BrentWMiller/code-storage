@@ -24,11 +24,11 @@ const NavItem = ({ children, href, theme = 'default' }: Props) => {
 
   const themeStyles: ThemeStyles = {
     default: {
-      inactive: 'text-white',
-      active: 'text-purple-400',
+      inactive: 'text-white/50 hover:text-white',
+      active: 'text-accent-cyan hover:text-accent-cyan',
     },
     primary: {
-      inactive: 'text-white bg-purple-400 rounded-full p-3',
+      inactive: 'text-white bg-accent-cyan rounded-md p-2 hover:bg-accent-cyan/80',
       active: 'text-white',
     },
   };
@@ -40,7 +40,11 @@ const NavItem = ({ children, href, theme = 'default' }: Props) => {
   return (
     <Link
       href={href}
-      className={clsx('flex items-center justify-center', themeStyles[theme].inactive, activeRoute === href ? themeStyles[theme].active : '')}
+      className={clsx(
+        'flex items-center justify-center transition-colors duration-300',
+        themeStyles[theme].inactive,
+        activeRoute === href ? themeStyles[theme].active : ''
+      )}
     >
       {children}
     </Link>
