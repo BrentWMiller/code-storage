@@ -2,14 +2,18 @@ import React from 'react';
 
 type Props = {
   heading?: string;
+  description?: string;
   container?: boolean;
   children: React.ReactNode;
 };
 
-const Layout = ({ heading, container = false, children }: Props) => {
+const Layout = ({ heading, description, container = false, children }: Props) => {
   return (
     <section className='w-full h-full'>
-      {heading && <h1 className='text-2xl font-semibold p-8'>{heading}</h1>}
+      <div className='p-8 flex flex-col gap-1.5'>
+        {heading && <h1 className='text-2xl font-semibold'>{heading}</h1>}
+        {description && <p className='text-base text-white/80'>{description}</p>}
+      </div>
 
       {container ? <div className='px-8'>{children}</div> : children}
     </section>
