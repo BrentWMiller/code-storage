@@ -4,7 +4,11 @@ import { NextPage } from 'next';
 import Layout from '../components/global/Layout';
 
 const Settings: NextPage = () => {
-  return <Layout heading='Settings'>Hello world</Layout>;
+  return (
+    <Layout heading='Settings' container>
+      Hello world
+    </Layout>
+  );
 };
 
 export default Settings;
