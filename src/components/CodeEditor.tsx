@@ -11,6 +11,9 @@ import { theme as monokaiTheme } from '../editor-themes/monokai';
 import { appConfig } from '../lib/config';
 import { checkForAndCreateDir, saveFile } from '../lib/file-management';
 
+// hooks
+import useSettings from '../hooks/context/useSettings';
+
 declare global {
   interface Window {
     monaco: any;
@@ -41,6 +44,7 @@ const themeConfigs = {
 };
 
 const CodeEditor = ({ theme }: Props) => {
+  const { settings } = useSettings();
   const editorRef = useRef(null);
   const [fileName, setFileName] = useState<string>('');
   const [languages, setLanguages] = useState<MonacoLanguage[]>([]);
@@ -143,7 +147,7 @@ const CodeEditor = ({ theme }: Props) => {
           <input
             className='bg-transparent appearance-none'
             placeholder='Name your file...'
-            value={fileName}
+            value={fileName ? fileName : settings.defaultFileName}
             onChange={(e) => handleFileNameChange(e)}
           />
         </div>
@@ -157,7 +161,7 @@ const CodeEditor = ({ theme }: Props) => {
         <Editor
           width='100%'
           height='90%'
-          defaultLanguage={appConfig.DEFAULT_LANGUAGE_ID}
+          defaultLanguage={settings.defaultEditorLanguage}
           theme={theme ? theme : ThemeOptions.DARKULA}
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}

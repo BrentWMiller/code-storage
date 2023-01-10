@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useFormContext } from 'react-hook-form';
 import { FieldWrapper } from './FieldWrapper';
 
@@ -8,20 +9,20 @@ type InputProps = {
   required?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
-  large?: boolean;
-  inline?: boolean;
   [x: string]: any;
 };
 
-const Input = ({ type, className, name, required, onChange, label, large, inline, ...props }: InputProps) => {
+const Input = ({ type, className, name, required, onChange, label, props }: InputProps) => {
   const { register } = useFormContext();
+
   return (
-    <FieldWrapper {...{ name, label, required, inline }}>
+    <FieldWrapper {...{ name, label, required }}>
       <input
         {...register(name, { onChange, required: required ? 'This field is required' : false })}
         type={type}
-        className={`w-full ${large ? 'input-lg' : 'input'} ${className || ''}`}
+        className={clsx(className, 'bg-gray-900 py-2 px-3 font-normal rounded-lg text-white')}
         step={type === 'number' ? 'any' : undefined}
+        spellCheck={false}
         {...props}
       />
     </FieldWrapper>

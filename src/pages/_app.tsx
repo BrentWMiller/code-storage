@@ -12,8 +12,8 @@ import { SettingsProvider } from '../hooks/context/useSettings';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SettingsProvider>
-      <div className='flex min-h-screen'>
-        <main className='flex flex-grow bg-theme-bg text-white'>
+      <div className='flex min-h-screen bg-theme-bg'>
+        <main className='flex flex-grow text-white'>
           <Sidebar />
 
           <Component {...pageProps} />

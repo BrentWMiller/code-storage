@@ -44,9 +44,11 @@ const Settings: NextPage = () => {
   return (
     <Layout heading='Settings' container>
       <Form form={form} onSubmit={handleSubmit}>
-        <Input type='text' name='test' label='Test' />
-        <Select label='Default Editor Language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
-        <button type='submit'>Save Settings</button>
+        <div className='flex flex-col gap-6 max-w-screen-sm'>
+          <Input type='text' name='defaultFileName' label='Default file name' />
+          <Select label='Default editor language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
+          <button type='submit'>Save Settings</button>
+        </div>
       </Form>
     </Layout>
   );

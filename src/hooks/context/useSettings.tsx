@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { appConfig } from '../../lib/config';
 
 // lib
 import { readFile } from '../../lib/file-management';
 
 type Settings = {
+  defaultFileName: string;
   defaultEditorLanguage: string;
 };
 
@@ -17,7 +19,10 @@ const SettingsContext = createContext<SettingsContextT>({} as SettingsContextT);
 const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [settings, setSettings] = useState<Settings>({} as Settings);
+  const [settings, setSettings] = useState<Settings>({
+    defaultFileName: '',
+    defaultEditorLanguage: appConfig.DEFAULT_LANGUAGE_ID,
+  } as Settings);
 
   const loadSettings = async () => {
     try {
