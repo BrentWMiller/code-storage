@@ -27,7 +27,7 @@
         "writeFile": true,
         "readDir": true,
         "createDir": true,
-        "scope": ["$HOME/*", "$HOME", "$HOME/Code Storage", "$HOME/Code Storage/*"]
+        "scope": ["$HOME", "$HOME/*", "$HOME/Code Storage", "$HOME/Code Storage/*", "$HOME/Code Storage/files", "$HOME/Code Storage/files/*"]
       }
     },
     "bundle": {

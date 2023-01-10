@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { writeTextFile, BaseDirectory, exists, createDir } from '@tauri-apps/api/fs';
 import Editor from '@monaco-editor/react';
 import { toast } from 'react-hot-toast';
 
@@ -10,6 +9,7 @@ import { theme as monokaiTheme } from '../editor-themes/monokai';
 
 // lib
 import { appConfig } from '../lib/config';
+import { checkForAndCreateDir, saveFile } from '../lib/file-management';
 
 declare global {
   interface Window {
@@ -82,15 +82,9 @@ const CodeEditor = ({ theme }: Props) => {
   const handleSave = async () => {
     const fileValue = editorRef.current.getValue();
 
-    // check if directory exists
-    const dirExists = await exists(appConfig.DEFAULT_BASE_FOLDER, { dir: BaseDirectory.Home });
-    if (!dirExists) {
-      await createDir(appConfig.DEFAULT_BASE_FOLDER, { dir: BaseDirectory.Home });
-    }
-
-    // Create file
     try {
-      await writeTextFile(`${appConfig.DEFAULT_BASE_FOLDER}/${fileName}`, fileValue, { dir: BaseDirectory.Home });
+      await checkForAndCreateDir('files');
+      await saveFile(fileName, fileValue, 'files');
       toast.success('File saved successfully');
     } catch (error) {
       console.error(error);
