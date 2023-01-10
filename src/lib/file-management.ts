@@ -1,4 +1,4 @@
-import { writeTextFile, BaseDirectory, exists, createDir, readTextFile } from '@tauri-apps/api/fs';
+import { writeTextFile, BaseDirectory, exists, createDir, readTextFile, readDir, FileEntry } from '@tauri-apps/api/fs';
 import { appConfig } from './config';
 
 export const checkForAndCreateDir = async (dir?: string): Promise<boolean> => {
@@ -28,5 +28,15 @@ export const readFile = async (fileName: string, dir?: string): Promise<string |
     return fileContents;
   } else {
     return null;
+  }
+};
+
+export const loadDirContents = async (dir?: string): Promise<FileEntry[] | null> => {
+  const path = dir ? `${appConfig.DEFAULT_BASE_FOLDER}/${dir}` : appConfig.DEFAULT_BASE_FOLDER;
+  const dirExists = await exists(path, { dir: BaseDirectory.Home });
+
+  if (dirExists) {
+    const dirContents = await readDir(path, { dir: BaseDirectory.Home });
+    return dirContents;
   }
 };
