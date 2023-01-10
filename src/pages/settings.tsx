@@ -12,6 +12,7 @@ import Layout from '../components/global/Layout';
 import Form from '../components/base/Form';
 import Select from '../components/base/Select';
 import Input from '../components/base/Input';
+import useSettings from '../hooks/context/useSettings';
 
 type Form = {
   test: string;
@@ -19,15 +20,16 @@ type Form = {
 };
 
 const Settings: NextPage = () => {
+  const { settings, loadSettings } = useSettings();
+
   const form = useForm<Form>({
-    defaultValues: {
-      defaultEditorLanguage: appConfig.DEFAULT_LANGUAGE_ID,
-    },
+    defaultValues: settings,
   });
 
   const handleSubmit: SubmitHandler<Form> = async (data) => {
     try {
       await saveFile('settings.json', JSON.stringify(data));
+      await loadSettings();
       toast.success('Settings saved');
     } catch (error) {
       console.error(error);
@@ -36,20 +38,6 @@ const Settings: NextPage = () => {
   };
 
   useEffect(() => {
-    const loadSettings = async () => {
-      try {
-        const file = await readFile('settings.json');
-        const settings = JSON.parse(file);
-
-        if (settings) {
-          form.reset(settings);
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error('Failed to load settings');
-      }
-    };
-
     loadSettings();
   }, []);
 

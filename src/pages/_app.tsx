@@ -6,11 +6,12 @@ import '../styles/globals.css';
 // components
 import Sidebar from '../components/global/Sidebar';
 import { Toaster } from 'react-hot-toast';
+import { SettingsProvider } from '../hooks/context/useSettings';
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <SettingsProvider>
       <div className='flex min-h-screen'>
         <main className='flex flex-grow bg-theme-bg text-white'>
           <Sidebar />
@@ -20,6 +21,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Toaster position='bottom-right' toastOptions={{ style: { background: '#1f2937', color: '#fff' } }} />
         </main>
       </div>
-    </>
+    </SettingsProvider>
   );
 }
