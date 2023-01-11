@@ -11,7 +11,7 @@ type Props = {};
 
 const Navigation = (props: Props) => {
   return (
-    <nav className='flex flex-col justify-between items-center h-screen p-5 w-[80px]'>
+    <nav className='flex flex-col justify-between items-center h-full p-5 w-[80px]'>
       <ul className='flex flex-col gap-5'>
         <li>
           <NavItem href='/snippets/add' theme='primary'>

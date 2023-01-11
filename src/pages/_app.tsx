@@ -5,27 +5,24 @@ import { Toaster } from 'react-hot-toast';
 import '../styles/globals.css';
 
 // components
+import AppProviders from '../components/global/AppProviders';
 import Sidebar from '../components/global/Sidebar';
-
-// hooks
-import { SettingsProvider } from '../hooks/context/useSettings';
-import { SnippetsProvider } from '../hooks/context/useSnippets';
+import TitleBar from '../components/global/TitleBar';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SettingsProvider>
-      <SnippetsProvider>
-        <div className='flex min-h-screen bg-theme-bg'>
-          <main className='flex flex-grow text-white'>
-            <Sidebar />
+    <AppProviders>
+      <TitleBar />
+      <div className='flex min-h-screen bg-theme-bg'>
+        <main className='flex flex-grow text-white'>
+          <Sidebar />
 
-            <Component {...pageProps} />
+          <Component {...pageProps} />
 
-            <Toaster position='bottom-right' toastOptions={{ style: { background: '#1f2937', color: '#fff' } }} />
-          </main>
-        </div>
-      </SnippetsProvider>
-    </SettingsProvider>
+          <Toaster position='bottom-right' toastOptions={{ style: { background: '#1f2937', color: '#fff' } }} />
+        </main>
+      </div>
+    </AppProviders>
   );
 }
