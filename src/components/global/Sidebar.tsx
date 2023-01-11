@@ -22,7 +22,7 @@ const Sidebar = (props: Props) => {
   const animations = {
     sidebar: {
       hidden: { maxWidth: 0, opacity: 0 },
-      visible: { maxWidth: sidebarSizes.content, opacity: 1 },
+      visible: { maxWidth: sidebarSizes.content, opacity: 1, transition: { ease: 'linear' } },
     },
     content: {
       hidden: { opacity: 0, transition: { duration: 0.1, delay: 0 } },

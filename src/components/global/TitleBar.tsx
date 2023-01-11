@@ -14,8 +14,8 @@ const TitleBar = ({}: Props) => {
   const { sidebarOpen, setSidebarOpen } = useTheme();
 
   const animation = {
-    closed: { paddingLeft: '96px', transition: { duration: 0.05 } },
-    open: { paddingLeft: '290px', transition: { duration: 0.05 } },
+    closed: { paddingLeft: '96px', transition: { duration: 0.01, ease: 'linear' } },
+    open: { paddingLeft: '290px', transition: { duration: 0.01, ease: 'linear' } },
   };
 
   const handleSidebarToggle = () => {
