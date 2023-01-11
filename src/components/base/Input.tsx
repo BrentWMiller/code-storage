@@ -20,7 +20,7 @@ const Input = ({ type, className, name, required, onChange, label, props }: Inpu
       <input
         {...register(name, { onChange, required: required ? 'This field is required' : false })}
         type={type}
-        className={clsx(className, 'bg-gray-900 py-2 px-3 font-normal rounded-lg text-white')}
+        className={clsx(className, 'bg-theme-input py-2 px-3 font-normal rounded-lg text-white')}
         step={type === 'number' ? 'any' : undefined}
         spellCheck={false}
         {...props}

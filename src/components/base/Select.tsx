@@ -45,7 +45,7 @@ export default function Select({ name, label, required, options, defaultValue, o
               value={selected ? selected.value : defaultValue}
               {...field}
               {...props}
-              className={clsx(className, 'appearance-none text-white bg-gray-900 font-normal py-2 px-3 rounded-lg')}
+              className={clsx(className, 'appearance-none text-white bg-theme-input font-normal py-2 px-3 rounded-lg')}
             >
               {options?.map((option) => (
                 <option key={option.value} value={option.value}>

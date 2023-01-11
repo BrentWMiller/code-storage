@@ -11,6 +11,7 @@ module.exports = {
           bg: '#282a36',
           sidebar: '#1E1F29',
           divider: '#242530',
+          input: '#1E1F29',
         },
         accent: {
           blue: '#5394ec',
