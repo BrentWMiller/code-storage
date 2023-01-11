@@ -47,7 +47,7 @@ const Sidebar = (props: Props) => {
           variants={animations.sidebar}
           initial='hidden'
           animate={sidebarOpen ? 'visible' : 'hidden'}
-          className={clsx('p-5 w-full h-full', !sidebarOpen && 'pointer-events-none')}
+          className={clsx('p-5 w-full h-full pt-16', !sidebarOpen && 'pointer-events-none')}
         >
           <motion.div variants={animations.content} initial='hidden' animate={sidebarOpen ? 'visible' : 'hidden'}>
             Sidebar content will go here
