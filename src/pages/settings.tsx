@@ -47,6 +47,10 @@ const Settings: NextPage = () => {
         <div className='flex flex-col gap-6 max-w-screen-sm'>
           <Input type='text' name='defaultFileName' label='Default file name' />
           <Select label='Default editor language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
+
+          <p>TODO Editor font family</p>
+          <p>TODO Accent color</p>
+
           <button type='submit'>Save Settings</button>
         </div>
       </Form>
