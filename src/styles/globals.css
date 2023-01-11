@@ -11,6 +11,6 @@
   }
 
   html {
-    @apply font-body antialiased;
+    @apply antialiased;
   }
 }
