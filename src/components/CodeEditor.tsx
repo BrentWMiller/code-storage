@@ -109,14 +109,12 @@ const CodeEditor = ({ theme }: Props) => {
     let res = await fetch(path);
 
     if (res.status !== 404) {
-      console.log('set extension');
       setCurrentLanguageIcon(path);
     } else {
       path = `${appConfig.LANGUAGE_ICONS_FOLDER}/${language?.aliases?.[0] || 'default_file'}.svg`;
       res = await fetch(path);
 
       if (res.status !== 404) {
-        console.log('set aliases');
         setCurrentLanguageIcon(path);
       } else {
         setCurrentLanguageIcon(defaultIcon);
