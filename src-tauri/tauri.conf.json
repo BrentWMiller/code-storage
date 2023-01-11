@@ -28,6 +28,15 @@
         "readDir": true,
         "createDir": true,
         "scope": ["$HOME", "$HOME/*", "$HOME/Code Storage", "$HOME/Code Storage/*", "$HOME/Code Storage/files", "$HOME/Code Storage/files/*"]
+      },
+      "window": {
+        "maximize": true,
+        "unmaximize": true,
+        "minimize": true,
+        "unminimize": true,
+        "setFullscreen": true,
+        "close": true,
+        "startDragging": true
       }
     },
     "bundle": {
@@ -66,10 +75,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 680,
         "resizable": true,
         "title": "Code Storage",
-        "width": 800
+        "width": 1200,
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay"
       }
     ]
   }

@@ -258,6 +258,8 @@ dependencies = [
 name = "code-storage"
 version = "0.0.0"
 dependencies = [
+ "cocoa",
+ "objc",
  "serde",
  "serde_json",
  "tauri",

@@ -3,15 +3,30 @@
     windows_subsystem = "windows"
 )]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+#[cfg(target_os = "macos")]
+#[macro_use]
+extern crate objc;
+
+use tauri::{Manager, WindowEvent};
+use window_ext::WindowExt;
+
+mod window_ext;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .setup(|app| {
+            let win = app.get_window("main").unwrap();
+            win.set_transparent_titlebar(true);
+            win.position_traffic_lights(20.0, 20.0);
+            Ok(())
+        })
+        .on_window_event(|e| {
+            if let WindowEvent::Resized(..) = e.event() {
+                let win = e.window();
+                win.position_traffic_lights(20., 20.);
+            }
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
 }
