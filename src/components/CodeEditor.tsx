@@ -163,6 +163,13 @@ const CodeEditor = ({ theme }: Props) => {
           theme={theme ? theme : ThemeOptions.DARKULA}
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}
+          options={{
+            fontFamily: 'FiraCode',
+            fontSize: 16,
+            minimap: {
+              enabled: false,
+            },
+          }}
         />
       </div>
     </section>
