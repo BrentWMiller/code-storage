@@ -34,7 +34,7 @@ const Sidebar = (props: Props) => {
     <motion.div
       initial={{ maxWidth: sidebarSizes.nav }}
       animate={{ maxWidth: sidebarOpen ? sidebarSizes.total : sidebarSizes.nav }}
-      className='relative w-full h-full flex-shrink-0 z-10 pt-8 bg-theme-sidebar'
+      className='relative w-full h-full flex-shrink-0 z-10 bg-theme-sidebar'
     >
       <motion.div
         initial={{ maxWidth: sidebarSizes.nav }}
