@@ -5,9 +5,10 @@ import { appConfig } from '../../lib/config';
 // lib
 import { readFile } from '../../lib/file-management';
 
-type Settings = {
+export type Settings = {
   defaultFileName: string;
   defaultEditorLanguage: string;
+  accentColor: string;
 };
 
 interface SettingsContextT {
@@ -22,6 +23,7 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   const [settings, setSettings] = useState<Settings>({
     defaultFileName: '',
     defaultEditorLanguage: appConfig.DEFAULT_LANGUAGE_ID,
+    accentColor: appConfig.DEFAULT_ACCENT_COLOR,
   } as Settings);
 
   const loadSettings = async () => {

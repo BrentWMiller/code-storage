@@ -5,19 +5,19 @@ import { toast } from 'react-hot-toast';
 
 // lib
 import { appConfig } from '../lib/config';
-import { readFile, saveFile } from '../lib/file-management';
+import { saveFile } from '../lib/file-management';
+
+// hooks
+import useSettings, { Settings } from '../hooks/context/useSettings';
 
 // components
 import Layout from '../components/global/Layout';
 import Form from '../components/base/Form';
 import Select from '../components/base/Select';
 import Input from '../components/base/Input';
-import useSettings from '../hooks/context/useSettings';
+import ColorPicker from '../components/ColorPicker';
 
-type Form = {
-  test: string;
-  defaultEditorLanguage: string;
-};
+type Form = Settings;
 
 const Settings: NextPage = () => {
   const { settings, loadSettings } = useSettings();
@@ -49,7 +49,8 @@ const Settings: NextPage = () => {
           <Select label='Default editor language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
 
           <p>TODO Editor font family</p>
-          <p>TODO Accent color</p>
+
+          <ColorPicker label='Interface Accent Color' name='accentColor' activeValue={form.getValues().accentColor} />
 
           <button type='submit'>Save Settings</button>
         </div>

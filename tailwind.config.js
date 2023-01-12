@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}', './src/icons/**/*.{js,ts,jsx,tsx}'],
+  safelist: [
+    {
+      pattern: /accent-(blue|cyan|green|magenta|red|yellow|gray)/,
+      variants: ['xs', 'sm', 'md', 'lg', 'xl'],
+    },
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -20,6 +26,7 @@ module.exports = {
           magenta: '#ae8abe',
           red: '#e74644',
           yellow: '#dcc457',
+          gray: '#7f7f7f',
         },
       },
     },

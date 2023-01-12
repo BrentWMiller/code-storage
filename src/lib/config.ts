@@ -7,4 +7,5 @@ export const appConfig = {
     { value: 'typescript', label: 'TypeScript' },
     { value: 'python', label: 'Python' },
   ],
+  DEFAULT_ACCENT_COLOR: 'cyan',
 };
