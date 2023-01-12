@@ -4,7 +4,6 @@ module.exports = {
   safelist: [
     {
       pattern: /accent-(blue|cyan|green|magenta|red|yellow|gray)/,
-      variants: ['xs', 'sm', 'md', 'lg', 'xl'],
     },
   ],
   theme: {

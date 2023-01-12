@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
+// hooks
+import useSettings from '../../hooks/context/useSettings';
+
 // components
 import Link from 'next/link';
 
@@ -20,16 +23,19 @@ type ThemeStyles = {
 
 const NavItem = ({ children, href, theme = 'default' }: Props) => {
   const router = useRouter();
+  const {
+    settings: { accentColor },
+  } = useSettings();
   const [activeRoute, setActiveRoute] = useState<string>('');
 
   const themeStyles: ThemeStyles = {
     default: {
       inactive: 'text-white/50 hover:text-white',
-      active: 'text-accent-cyan hover:text-accent-cyan',
+      active: `text-accent-${accentColor}`,
     },
     primary: {
-      inactive: 'text-white bg-accent-cyan rounded-md p-2 hover:bg-accent-cyan/80',
-      active: 'text-white',
+      inactive: `text-white bg-accent-${accentColor} rounded-md p-2 hover:opacity-80`,
+      active: `text-white rounded-md p-2 bg-accent-${accentColor}`,
     },
   };
 
@@ -42,8 +48,7 @@ const NavItem = ({ children, href, theme = 'default' }: Props) => {
       href={href}
       className={clsx(
         'flex items-center justify-center transition-colors duration-300',
-        themeStyles[theme].inactive,
-        activeRoute === href ? themeStyles[theme].active : ''
+        activeRoute === href ? themeStyles[theme].active : themeStyles[theme].inactive
       )}
     >
       {children}
