@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useFormContext, Controller } from 'react-hook-form';
+import useSettings from '../../hooks/context/useSettings';
 import { FieldWrapper } from './FieldWrapper';
 
 type Option = {
@@ -20,6 +21,9 @@ type Props = {
 
 export default function Select({ name, label, required, options, defaultValue, onChange: customOnChange, inline, className, ...props }: Props) {
   const { control } = useFormContext();
+  const {
+    settings: { accentColor },
+  } = useSettings();
 
   return (
     <FieldWrapper {...{ name, label, required, inline }}>
@@ -45,7 +49,11 @@ export default function Select({ name, label, required, options, defaultValue, o
               value={selected ? selected.value : defaultValue}
               {...field}
               {...props}
-              className={clsx(className, 'appearance-none text-white bg-theme-input font-normal py-2 px-3 rounded-lg')}
+              className={clsx(
+                className,
+                'appearance-none text-white bg-theme-input font-normal py-2 px-3 rounded-lg',
+                `focus:ring-2 outline-none ring-accent-${accentColor}`
+              )}
             >
               {options?.map((option) => (
                 <option key={option.value} value={option.value}>
