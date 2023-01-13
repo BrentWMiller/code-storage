@@ -31,7 +31,7 @@ const Input = ({ type, className, name, required, onChange, label, props }: Inpu
         className={clsx(
           className,
           'bg-theme-input py-2 px-3 font-normal rounded-lg text-white',
-          `focus:ring-2 outline-none ring-accent-${accentColor}`
+          `focus:ring-2 outline-none ring-accent-${accentColor}-500`
         )}
         step={type === 'number' ? 'any' : undefined}
         spellCheck={false}

@@ -39,9 +39,9 @@ const ColorPicker = ({ label, name, required, activeValue, onChange }: Props) =>
                   <label
                     className={clsx(
                       'block w-6 h-6 rounded-full',
-                      `bg-accent-${color} hover:opacity-80`,
+                      ` bg-gradient-to-b from-accent-${color}-500 to-accent-${color}-800 hover:opacity-80`,
                       color === activeValue && 'ring ring-white ring-offset-2 ring-offset-theme-bg',
-                      color === selected && `ring ring-accent-${color} ring-offset-2 ring-offset-theme-bg`
+                      color === selected && `ring ring-accent-${color}-500 ring-offset-2 ring-offset-theme-bg`
                     )}
                     title={color}
                   >

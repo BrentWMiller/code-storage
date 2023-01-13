@@ -52,7 +52,7 @@ export default function Select({ name, label, required, options, defaultValue, o
               className={clsx(
                 className,
                 'appearance-none text-white bg-theme-input font-normal py-2 px-3 rounded-lg',
-                `focus:ring-2 outline-none ring-accent-${accentColor}`
+                `focus:ring-2 outline-none ring-accent-${accentColor}-500`
               )}
             >
               {options?.map((option) => (

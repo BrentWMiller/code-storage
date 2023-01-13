@@ -31,11 +31,11 @@ const NavItem = ({ children, href, theme = 'default' }: Props) => {
   const themeStyles: ThemeStyles = {
     default: {
       inactive: 'text-white/50 hover:text-white',
-      active: `text-accent-${accentColor}`,
+      active: `text-accent-${accentColor}-500`,
     },
     primary: {
-      inactive: `text-white bg-accent-${accentColor} rounded-md p-2 hover:opacity-80`,
-      active: `text-white rounded-md p-2 bg-accent-${accentColor}`,
+      inactive: `text-white bg-accent-${accentColor}-500 rounded-md p-2 hover:opacity-80`,
+      active: `text-white rounded-md p-2 bg-accent-${accentColor}-500`,
     },
   };
 
