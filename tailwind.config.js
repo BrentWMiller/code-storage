@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}', './src/icons/**/*.{js,ts,jsx,tsx}'],
   safelist: [
     {
-      pattern: /accent-(blue|cyan|green|magenta|red|yellow|gray)/,
+      pattern: /accent-(rose|orange|yellow|emerald|cyan|blue|violet|fuchsia)/,
     },
   ],
   theme: {
@@ -19,13 +22,14 @@ module.exports = {
           input: '#1E1F29',
         },
         accent: {
-          blue: '#5394ec',
-          cyan: '#299999',
-          green: '#379c1a',
-          magenta: '#ae8abe',
-          red: '#e74644',
-          yellow: '#dcc457',
-          gray: '#7f7f7f',
+          rose: colors.rose,
+          orange: colors.orange,
+          yellow: colors.yellow,
+          emerald: colors.emerald,
+          cyan: colors.teal,
+          blue: colors.blue,
+          violet: colors.violet,
+          fuchsia: colors.fuchsia,
         },
       },
     },
