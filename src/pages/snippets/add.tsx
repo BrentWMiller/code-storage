@@ -6,6 +6,9 @@ import Form from '../../components/base/Form';
 import Input from '../../components/base/Input';
 import CodeEditor from '../../components/CodeEditor';
 import Layout from '../../components/global/Layout';
+import ActionBar from '../../components/global/ActionBar';
+import Button from '../../components/base/Button';
+import TextArea from '../../components/base/Textarea';
 
 type Form = {
   title: string;
@@ -23,6 +26,7 @@ const SnippetsAdd: NextPage = () => {
   });
 
   const handleSubmit: SubmitHandler<Form> = async (data) => {
+    console.log(data);
     // try {
     //   await saveFile('settings.json', JSON.stringify(data));
     //   await loadSettings();
@@ -34,13 +38,20 @@ const SnippetsAdd: NextPage = () => {
   };
 
   return (
-    <Layout heading='Add a Snippet' description='Name it, describe it, paste some code, and save.'>
-      <Form form={form} onSubmit={handleSubmit} className='flex flex-col gap-8'>
-        <div className='px-8'>
+    <Layout>
+      <Form form={form} onSubmit={handleSubmit} className='flex flex-col gap-8 h-full'>
+        <div className='px-8 flex flex-col gap-4 max-w-[500px]'>
           <Input label='Title' name='title' type='text' />
-          <Input label='Description' name='description' type='text' />
+          <TextArea label='Description' name='description' />
         </div>
         <CodeEditor />
+
+        <ActionBar>
+          <Button href='/snippets'>Cancel</Button>
+          <Button type='submit' color='primary'>
+            Save
+          </Button>
+        </ActionBar>
       </Form>
     </Layout>
   );
