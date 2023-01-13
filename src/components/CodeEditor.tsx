@@ -143,6 +143,8 @@ const CodeEditor = ({ theme }: Props) => {
           <img src={currentLanguageIcon} alt={`Logo for ${currentLanguage}`} className='w-4 h-4' />
 
           <input
+            name='file-name'
+            type='text'
             className='bg-transparent appearance-none'
             placeholder='Name your file...'
             value={fileName ? fileName : settings.defaultFileName}
