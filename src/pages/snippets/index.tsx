@@ -16,11 +16,7 @@ const Snippets: NextPage = () => {
 
   return (
     <Layout heading='Snippets' description='All your available code snippets' container>
-      <div className='flex flex-col'>
-        {snippets.map((snippet) => (
-          <div>{snippet.name}</div>
-        ))}
-      </div>
+      Index
     </Layout>
   );
 };

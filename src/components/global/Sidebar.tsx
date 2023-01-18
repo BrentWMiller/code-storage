@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 // hooks
 import useTheme from '../../hooks/context/useTheme';
+import SnippetsList from '../SnippetsList';
 
 // components
 import Navigation from './Navigation';
@@ -50,7 +51,7 @@ const Sidebar = (props: Props) => {
           className={clsx('p-5 w-full h-full pt-16', !sidebarOpen && 'pointer-events-none')}
         >
           <motion.div variants={animations.content} initial='hidden' animate={sidebarOpen ? 'visible' : 'hidden'}>
-            Sidebar content will go here
+            <SnippetsList />
           </motion.div>
         </motion.div>
       </motion.div>
