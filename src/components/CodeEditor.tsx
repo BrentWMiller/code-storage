@@ -22,6 +22,8 @@ declare global {
 
 type Props = {
   theme?: ThemeOptions;
+  onCodeChange?: (value: string) => void;
+  onFileNameChange?: (fileName: string) => void;
 };
 
 type MonacoLanguage = {
@@ -43,7 +45,7 @@ const themeConfigs = {
   [ThemeOptions.MONOKAI]: monokaiTheme,
 };
 
-const CodeEditor = ({ theme }: Props) => {
+const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
   const { settings } = useSettings();
   const editorRef = useRef(null);
   const [fileName, setFileName] = useState<string>('');
@@ -81,19 +83,8 @@ const CodeEditor = ({ theme }: Props) => {
       setCurrentLanguage(language);
       getLanguageIcon(language);
     }
-  };
 
-  const handleSave = async () => {
-    const fileValue = editorRef.current.getValue();
-
-    try {
-      await checkForAndCreateDir('files');
-      await saveFile(fileName, fileValue, 'files');
-      toast.success('File saved successfully');
-    } catch (error) {
-      console.error(error);
-      toast.error('Failed to save file');
-    }
+    onFileNameChange(fileName);
   };
 
   const getLanguageIcon = async (language: MonacoLanguage) => {
@@ -122,20 +113,6 @@ const CodeEditor = ({ theme }: Props) => {
     }
   };
 
-  useEffect(() => {
-    const saveHandler = (e) => {
-      if (e.ctrlKey && e.key === 's') {
-        e.preventDefault();
-        handleSave();
-      }
-    };
-
-    window.addEventListener('keydown', saveHandler);
-    return () => {
-      window.removeEventListener('keydown', saveHandler);
-    };
-  }, []);
-
   return (
     <section className='flex flex-col h-full'>
       <header className='flex items-center justify-between bg-theme-sidebar px-8 py-2'>
@@ -151,10 +128,6 @@ const CodeEditor = ({ theme }: Props) => {
             onChange={(e) => handleFileNameChange(e)}
           />
         </div>
-
-        <button type='button' onClick={() => handleSave()}>
-          Save file
-        </button>
       </header>
 
       <div className='relative flex-shrink-0 h-full p-4'>
@@ -165,6 +138,7 @@ const CodeEditor = ({ theme }: Props) => {
           theme={theme ? theme : ThemeOptions.DARKULA}
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}
+          onChange={(value) => onCodeChange(value)}
           options={{
             fontFamily: 'FiraCode',
             fontSize: 16,

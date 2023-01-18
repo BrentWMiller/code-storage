@@ -8,33 +8,49 @@ import CodeEditor from '../../components/CodeEditor';
 import Layout from '../../components/global/Layout';
 import ActionBar from '../../components/global/ActionBar';
 import Button from '../../components/base/Button';
-import TextArea from '../../components/base/Textarea';
+import TextArea from '../../components/base/TextArea';
+import { checkForAndCreateDir, saveFile } from '../../lib/file-management';
+import toast from 'react-hot-toast';
+import useSnippets from '../../hooks/context/useSnippets';
 
 type Form = {
   title: string;
   description: string;
   tags: string[];
+  fileName: string;
+  fileValue: string;
 };
 
 const SnippetsAdd: NextPage = () => {
+  const { loadSnippets } = useSnippets();
   const form = useForm<Form>({
     defaultValues: {
       title: '',
       description: '',
       tags: [],
+      fileName: '',
+      fileValue: '',
     },
   });
 
+  const handleCodeEditorChange = (fileValue: string) => {
+    form.setValue('fileValue', fileValue);
+  };
+
+  const handleFileNameChange = (fileName: string) => {
+    form.setValue('fileName', fileName);
+  };
+
   const handleSubmit: SubmitHandler<Form> = async (data) => {
-    console.log(data);
-    // try {
-    //   await saveFile('settings.json', JSON.stringify(data));
-    //   await loadSettings();
-    //   toast.success('Settings saved');
-    // } catch (error) {
-    //   console.error(error);
-    //   toast.error('Failed to save settings');
-    // }
+    try {
+      await checkForAndCreateDir('files');
+      await saveFile(data.fileName, data.fileValue, 'files');
+      toast.success('File saved successfully');
+      loadSnippets();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to save file');
+    }
   };
 
   return (
@@ -44,7 +60,7 @@ const SnippetsAdd: NextPage = () => {
           <Input label='Title' name='title' type='text' />
           <TextArea label='Description' name='description' />
         </div>
-        <CodeEditor />
+        <CodeEditor onCodeChange={handleCodeEditorChange} onFileNameChange={handleFileNameChange} />
 
         <ActionBar>
           <Button href='/snippets'>Cancel</Button>
@@ -58,3 +74,6 @@ const SnippetsAdd: NextPage = () => {
 };
 
 export default SnippetsAdd;
+function loadSettings() {
+  throw new Error('Function not implemented.');
+}
