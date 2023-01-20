@@ -16,6 +16,7 @@ import Form from '../components/base/Form';
 import Select from '../components/base/Select';
 import Input from '../components/base/Input';
 import ColorPicker from '../components/ColorPicker';
+import Button from '../components/base/Button';
 
 type Form = Settings;
 
@@ -52,7 +53,11 @@ const Settings: NextPage = () => {
 
           <ColorPicker label='Interface Accent Color' name='accentColor' activeValue={form.getValues().accentColor} />
 
-          <button type='submit'>Save Settings</button>
+          <div>
+            <Button type='submit' color='primary'>
+              Save Settings
+            </Button>
+          </div>
         </div>
       </Form>
     </Layout>
