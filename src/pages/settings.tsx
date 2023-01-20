@@ -48,7 +48,7 @@ const Settings: NextPage = () => {
           <Input type='text' name='defaultFileName' label='Default file name' />
           <Select label='Default editor language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
 
-          <p>TODO Editor font family</p>
+          {/* // TODO Add option to change font */}
 
           <ColorPicker label='Interface Accent Color' name='accentColor' activeValue={form.getValues().accentColor} />
 
