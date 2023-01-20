@@ -50,6 +50,7 @@ const SnippetsAdd: NextPage = () => {
     try {
       await checkForAndCreateDir(appConfig.DEFAULT_SNIPPETS_FOLDER);
       await saveFile(`${data.title}/${data.fileName}`, data.fileValue, appConfig.DEFAULT_SNIPPETS_FOLDER);
+      await saveFile(`${data.title}/cs-description.md`, data.description, appConfig.DEFAULT_SNIPPETS_FOLDER);
       toast.success('File saved successfully');
       loadSnippets();
     } catch (error) {
