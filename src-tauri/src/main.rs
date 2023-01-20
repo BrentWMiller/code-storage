@@ -9,8 +9,28 @@ extern crate objc;
 
 use tauri::{Manager, WindowEvent};
 use window_ext::WindowExt;
+use std::fs;
+use std::path::Path;
 
 mod window_ext;
+
+#[tauri::command]
+async fn read_file(path: std::path::PathBuf) -> Vec<u8> {
+    fs::read(path).unwrap()
+}
+
+#[tauri::command]
+async fn write_file(path: &str, contents: &str) -> Result<String, String> {
+    println!("Writing file: {}", path);
+    match fs::create_dir_all(Path::new(path).parent().unwrap()) {
+        Ok(_) => (),
+        Err(error) => return Err(error.to_string()),
+    }
+    match fs::write(path, contents) {
+        Ok(_) => Ok("Success writing file".to_string()),
+        Err(error) => Err(error.to_string()),
+    }
+}
 
 fn main() {
     tauri::Builder::default()
@@ -26,6 +46,7 @@ fn main() {
                 win.position_traffic_lights(20., 20.);
             }
         })
+        .invoke_handler(tauri::generate_handler![read_file, write_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

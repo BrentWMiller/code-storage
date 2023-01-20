@@ -1,6 +1,9 @@
 import { FileEntry } from '@tauri-apps/api/fs';
 import { createContext, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
+
+// lib
+import { appConfig } from '../../lib/config';
 import { loadDirContents } from '../../lib/file-management';
 
 interface SnippetsContextT {
@@ -16,7 +19,7 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const loadSnippets = async () => {
     try {
-      const contents = await loadDirContents('files');
+      const contents = await loadDirContents(appConfig.DEFAULT_SNIPPETS_FOLDER);
       setSnippets(contents);
     } catch (error) {
       console.error(error);

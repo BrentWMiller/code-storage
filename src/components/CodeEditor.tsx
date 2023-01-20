@@ -1,6 +1,5 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { toast } from 'react-hot-toast';
 
 // themes
 import { theme as nightOwlTheme } from '../editor-themes/night-owl';
@@ -9,7 +8,6 @@ import { theme as monokaiTheme } from '../editor-themes/monokai';
 
 // lib
 import { appConfig } from '../lib/config';
-import { checkForAndCreateDir, saveFile } from '../lib/file-management';
 
 // hooks
 import useSettings from '../hooks/context/useSettings';

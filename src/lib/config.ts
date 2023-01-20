@@ -1,6 +1,7 @@
 export const appConfig = {
   DEFAULT_BASE_FOLDER: 'Code Storage',
   DEFAULT_LANGUAGE_ID: 'javascript',
+  DEFAULT_SNIPPETS_FOLDER: 'snippets',
   LANGUAGE_ICONS_FOLDER: '/language-icons',
   LANGUAGES: [
     { value: 'javascript', label: 'JavaScript' },

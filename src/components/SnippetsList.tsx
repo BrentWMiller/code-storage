@@ -15,7 +15,7 @@ const SnippetsList = (props: Props) => {
   return (
     <div className='flex flex-col'>
       {snippets.map((snippet) => (
-        <div>{snippet.name}</div>
+        <div key={snippet.path}>{snippet.name}</div>
       ))}
     </div>
   );
