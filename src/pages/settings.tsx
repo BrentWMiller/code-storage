@@ -46,8 +46,8 @@ const Settings: NextPage = () => {
     <Layout heading='Settings' container>
       <Form form={form} onSubmit={handleSubmit}>
         <div className='flex flex-col gap-6 max-w-screen-sm'>
-          <Input type='text' name='defaultFileName' label='Default file name' />
-          <Select label='Default editor language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
+          <Input type='text' name='defaultFileName' label='Default File Name' />
+          <Select label='Default Editor Language' name='defaultEditorLanguage' options={appConfig.LANGUAGES} />
 
           {/* // TODO Add option to change font */}
 
