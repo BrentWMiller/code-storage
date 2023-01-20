@@ -47,6 +47,8 @@ const SnippetsAdd: NextPage = () => {
   };
 
   const handleSubmit: SubmitHandler<Form> = async (data) => {
+    // TODO remove the old file if the title is changed
+
     try {
       await checkForAndCreateDir(appConfig.DEFAULT_SNIPPETS_FOLDER);
       await saveFile(`${data.title}/${data.fileName}`, data.fileValue, appConfig.DEFAULT_SNIPPETS_FOLDER);
