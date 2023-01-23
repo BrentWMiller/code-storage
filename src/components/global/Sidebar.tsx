@@ -12,9 +12,8 @@ type Props = {};
 
 const sidebarSizes = {
   nav: 80,
-  content: 240,
-  total: 320,
-  arrowSize: 40,
+  content: 300,
+  total: 380,
 };
 
 const Sidebar = (props: Props) => {
@@ -48,7 +47,7 @@ const Sidebar = (props: Props) => {
           variants={animations.sidebar}
           initial='hidden'
           animate={sidebarOpen ? 'visible' : 'hidden'}
-          className={clsx('p-5 w-full h-full pt-16', !sidebarOpen && 'pointer-events-none')}
+          className={clsx('py-5 w-full h-full pt-16', !sidebarOpen && 'pointer-events-none')}
         >
           <motion.div variants={animations.content} initial='hidden' animate={sidebarOpen ? 'visible' : 'hidden'}>
             <SnippetsList />

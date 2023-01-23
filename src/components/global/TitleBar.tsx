@@ -15,7 +15,7 @@ const TitleBar = ({}: Props) => {
 
   const animation = {
     closed: { paddingLeft: '96px', transition: { duration: 0.01, ease: 'linear' } },
-    open: { paddingLeft: '290px', transition: { duration: 0.01, ease: 'linear' } },
+    open: { paddingLeft: '350px', transition: { duration: 0.01, ease: 'linear' } },
   };
 
   const handleSidebarToggle = () => {
