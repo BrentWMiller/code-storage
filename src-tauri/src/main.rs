@@ -11,6 +11,7 @@ use tauri::{Manager, WindowEvent};
 use window_ext::WindowExt;
 use std::fs;
 use std::path::Path;
+use dirs;
 
 mod window_ext;
 
@@ -32,6 +33,11 @@ async fn write_file(path: &str, contents: &str) -> Result<String, String> {
     }
 }
 
+#[tauri::command]
+async fn get_home_dir() -> String {
+    dirs::home_dir().unwrap().to_str().unwrap().to_string()
+}
+
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
@@ -46,7 +52,7 @@ fn main() {
                 win.position_traffic_lights(20., 20.);
             }
         })
-        .invoke_handler(tauri::generate_handler![read_file, write_file])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
