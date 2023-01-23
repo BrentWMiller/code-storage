@@ -1,5 +1,4 @@
 import { invoke } from '@tauri-apps/api/tauri';
-import { homeDir } from '@tauri-apps/api/path';
 import { BaseDirectory, exists, createDir, readTextFile, readDir, FileEntry } from '@tauri-apps/api/fs';
 import { appConfig } from './config';
 
@@ -17,10 +16,8 @@ export const checkForAndCreateDir = async (dir?: string): Promise<boolean> => {
 
 export const saveFile = async (fileName: string, fileContents: any, dir?: string) => {
   try {
-    if (!navigator) return;
-
-    const homeDirPath = await homeDir();
-    const path = dir ? `${homeDirPath}${appConfig.DEFAULT_BASE_FOLDER}/${dir}` : `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}`;
+    const homeDirPath = await invoke('get_home_dir');
+    const path = dir ? `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}/${dir}` : `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}`;
 
     await invoke('write_file', { path: `${path}/${fileName}`, contents: fileContents });
   } catch (error) {
