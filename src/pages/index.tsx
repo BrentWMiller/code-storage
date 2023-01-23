@@ -1,14 +1,24 @@
 import { NextPage } from 'next';
+import { useEffect } from 'react';
+
+// hooks
+import useSnippets from '../hooks/context/useSnippets';
 
 // components
 import Layout from '../components/global/Layout';
 
-const App: NextPage = () => {
+const Snippets: NextPage = () => {
+  const { loadSnippets, snippets } = useSnippets();
+
+  useEffect(() => {
+    loadSnippets();
+  }, []);
+
   return (
-    <Layout heading='Home' container>
-      Content will go here
+    <Layout heading='Snippets' description='All your available code snippets' container>
+      Index
     </Layout>
   );
 };
 
-export default App;
+export default Snippets;

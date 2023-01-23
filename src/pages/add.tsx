@@ -3,20 +3,20 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 // lib
-import { checkForAndCreateDir, saveFile } from '../../lib/file-management';
-import { appConfig } from '../../lib/config';
+import { checkForAndCreateDir, saveFile } from '../lib/file-management';
+import { appConfig } from '../lib/config';
 
 // hooks
-import useSnippets from '../../hooks/context/useSnippets';
+import useSnippets from '../hooks/context/useSnippets';
 
 // components
-import Form from '../../components/base/Form';
-import Input from '../../components/base/Input';
-import CodeEditor from '../../components/CodeEditor';
-import Layout from '../../components/global/Layout';
-import ActionBar from '../../components/global/ActionBar';
-import Button from '../../components/base/Button';
-import TextArea from '../../components/base/TextArea';
+import Form from '../components/base/Form';
+import Input from '../components/base/Input';
+import CodeEditor from '../components/CodeEditor';
+import Layout from '../components/global/Layout';
+import ActionBar from '../components/global/ActionBar';
+import Button from '../components/base/Button';
+import TextArea from '../components/base/TextArea';
 
 type Form = {
   title: string;
