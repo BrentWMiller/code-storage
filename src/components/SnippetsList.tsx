@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 // hooks
 import useSettings from '../hooks/context/useSettings';
 import useSnippets from '../hooks/context/useSnippets';
-import RefreshIcon from '../icons/RefreshIcon';
 import SearchIcon from '../icons/SearchIcon';
 
 type Props = {};
@@ -50,10 +49,6 @@ const SnippetsList = (props: Props) => {
           />
           <SearchIcon className='absolute top-1/2 -translate-y-1/2 left-3 text-gray-400 w-5 h-5 pointer-events-none' />
         </div>
-
-        <button onClick={() => loadSnippets()} type='button' title='Re-sync snippets folder'>
-          <RefreshIcon className='w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300' />
-        </button>
       </div>
 
       <ul className='flex flex-col'>
