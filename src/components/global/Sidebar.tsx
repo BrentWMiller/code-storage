@@ -47,7 +47,7 @@ const Sidebar = (props: Props) => {
           variants={animations.sidebar}
           initial='hidden'
           animate={sidebarOpen ? 'visible' : 'hidden'}
-          className={clsx('py-5 w-full h-full pt-16', !sidebarOpen && 'pointer-events-none')}
+          className={clsx('py-5 w-full h-full pt-16 overflow-y-auto', !sidebarOpen && 'pointer-events-none')}
         >
           <motion.div variants={animations.content} initial='hidden' animate={sidebarOpen ? 'visible' : 'hidden'}>
             <SnippetsList />

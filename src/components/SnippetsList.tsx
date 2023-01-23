@@ -35,7 +35,7 @@ const SnippetsList = (props: Props) => {
   }, []);
 
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-8 h-full'>
       <div className='px-5'>
         <div className='relative'>
           <input
