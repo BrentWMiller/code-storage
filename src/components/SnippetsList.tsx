@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 // hooks
 import useSettings from '../hooks/context/useSettings';
 import useSnippets from '../hooks/context/useSnippets';
+import SearchIcon from '../icons/SearchIcon';
 
 type Props = {};
 
@@ -36,29 +37,34 @@ const SnippetsList = (props: Props) => {
   return (
     <div className='flex flex-col gap-8'>
       <div className='px-5'>
-        <input
-          type='text'
-          className={clsx(
-            'w-full bg-theme-input py-2 px-3 font-normal rounded-lg text-white border-2 border-gray-600',
-            `focus:ring-2 outline-none ring-accent-${accentColor}-500 focus:border-accent-${accentColor}-500`
-          )}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className='relative'>
+          <input
+            type='text'
+            className={clsx(
+              'w-full bg-theme-input py-2 pr-3 pl-10 font-normal rounded-lg text-white border-2 border-theme-divider',
+              `focus:ring-2 outline-none ring-accent-${accentColor}-500`
+            )}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <SearchIcon className='absolute top-1/2 -translate-y-1/2 left-3 text-gray-400 w-5 h-5 pointer-events-none' />
+        </div>
       </div>
 
       <ul className='flex flex-col'>
         {filteredSnippets.map(({ path, name, tags }) => (
-          <li key={path} className='block py-4 border-t border-theme-divider px-5'>
+          <li key={path} className='block py-5 px-5'>
             <p className='text-base leading-tight font-medium'>{name}</p>
-            {tags?.length > 0 && (
+            {tags?.length > 0 ? (
               <div className='flex flex-wrap gap-2 mt-2'>
                 {tags.map((tag) => (
-                  <p key={tag} className='text-xs text-gray-400 bg-gray-800 px-1.5 py-1 rounded-full'>
-                    #{tag}
+                  <p key={tag} className={clsx('text-xs px-1.5 py-0.5 rounded-full', `text-white/90 bg-white/10`)}>
+                    {tag}
                   </p>
                 ))}
               </div>
+            ) : (
+              <p className='text-xs text-gray-500 italic mt-2'>No tags</p>
             )}
           </li>
         ))}
