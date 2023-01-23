@@ -21,7 +21,7 @@ import TextArea from '../../components/base/TextArea';
 type Form = {
   title: string;
   description: string;
-  tags: string[];
+  tags: string;
   fileName: string;
   fileValue: string;
 };
@@ -31,8 +31,8 @@ const SnippetsAdd: NextPage = () => {
   const form = useForm<Form>({
     defaultValues: {
       title: '',
+      tags: '',
       description: '',
-      tags: [],
       fileName: '',
       fileValue: '',
     },
@@ -47,7 +47,8 @@ const SnippetsAdd: NextPage = () => {
   };
 
   const handleSubmit: SubmitHandler<Form> = async (data) => {
-    // TODO remove the old file if the title is changed
+    // Generate title with tags after | symbol
+    data.title = data.tags !== '' ? `${data.title} | ${data.tags}` : data.title;
 
     try {
       await checkForAndCreateDir(appConfig.DEFAULT_SNIPPETS_FOLDER);
@@ -66,6 +67,7 @@ const SnippetsAdd: NextPage = () => {
       <Form form={form} onSubmit={handleSubmit} className='flex flex-col gap-8 h-full'>
         <div className='px-8 flex flex-col gap-4 max-w-[500px]'>
           <Input label='Title' name='title' type='text' />
+          <Input label='Tags' name='tags' type='text' />
           <TextArea label='Description' name='description' />
         </div>
         <CodeEditor onCodeChange={handleCodeEditorChange} onFileNameChange={handleFileNameChange} />
