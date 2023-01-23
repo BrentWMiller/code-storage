@@ -43,7 +43,7 @@ const TitleBar = ({}: Props) => {
 
       <button onClick={() => loadSnippets()} type='button' title='Re-sync snippets folder' className='flex items-center gap-2 group'>
         <RefreshIcon className='text-white/50 w-4 h-4 group-hover:text-white duration-300 transition-colors' />
-        <span className='text-white/80 text-sm'>Re-sync Snippets</span>
+        <span className='text-white/80 text-sm'>Re-sync</span>
       </button>
     </motion.div>
   );

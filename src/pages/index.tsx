@@ -7,7 +7,7 @@ import useSnippets from '../hooks/context/useSnippets';
 // components
 import Layout from '../components/global/Layout';
 
-const Snippets: NextPage = () => {
+const StoragePage: NextPage = () => {
   const { loadSnippets, snippets } = useSnippets();
 
   useEffect(() => {
@@ -15,10 +15,10 @@ const Snippets: NextPage = () => {
   }, []);
 
   return (
-    <Layout heading='Snippets' description='All your available code snippets' container>
+    <Layout heading='Storage' description='All your available code snippets' container>
       Index
     </Layout>
   );
 };
 
-export default Snippets;
+export default StoragePage;

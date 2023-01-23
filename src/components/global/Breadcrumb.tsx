@@ -25,7 +25,7 @@ const Breadcrumb = (props: Props) => {
             href='/'
             className={clsx('hover:text-white transition-colors duration-300 capitalize text-sm', path.length === 0 ? 'text-white' : 'text-gray-500')}
           >
-            Snippets
+            Storage
           </Link>
 
           {path.length > 0 && <span className='px-3 text-gray-600'>/</span>}
