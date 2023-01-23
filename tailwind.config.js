@@ -18,7 +18,7 @@ module.exports = {
         theme: {
           bg: '#282a36',
           sidebar: '#1E1F29',
-          divider: '#242530',
+          divider: '#303140',
           input: '#1E1F29',
         },
         accent: {
