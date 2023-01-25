@@ -37,13 +37,14 @@ export const readFile = async (fileName: string, dir?: string): Promise<string |
   }
 };
 
-export const loadDirContents = async (dir?: string): Promise<FileEntry[]> => {
-  const path = dir ? `${appConfig.DEFAULT_BASE_FOLDER}/${dir}` : appConfig.DEFAULT_BASE_FOLDER;
-  const dirExists = await exists(path, { dir: BaseDirectory.Home });
+export const loadDirContents = async (dir?: string): Promise<string[]> => {
+  const homeDirPath = await invoke('get_home_dir');
+  const path = dir ? `${homeDirPath}/${dir}` : `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}`;
+  const dirExists = await exists(path);
 
   if (dirExists) {
-    const dirContents = await readDir(path, { dir: BaseDirectory.Home });
-    return dirContents;
+    const files: string[] = await invoke('read_dir', { path });
+    return files;
   } else {
     return [];
   }

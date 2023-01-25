@@ -34,11 +34,12 @@ const Breadcrumb = (props: Props) => {
         {path.map((item, index) => {
           const isLast = index === path.length - 1;
           const href = `/${path.slice(0, index + 1).join('/')}`;
+          const name = item.replace(/-/g, ' ');
 
           return (
             <li key={item} className='flex items-center'>
               <Link href={href} className={clsx('hover:text-white transition-colors duration-300 capitalize text-sm', !isLast && 'text-gray-500')}>
-                {item}
+                {name}
               </Link>
 
               {!isLast && <span className='px-3 text-gray-600'>/</span>}

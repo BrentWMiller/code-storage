@@ -21,6 +21,17 @@ async fn read_file(path: std::path::PathBuf) -> Vec<u8> {
 }
 
 #[tauri::command]
+async fn read_dir(path: std::path::PathBuf) -> Vec<String> {
+    let mut file_names = Vec::new();
+    for entry in fs::read_dir(path).unwrap() {
+        let entry = entry.unwrap();
+        let file_name = entry.file_name().into_string().unwrap();
+        file_names.push(file_name);
+    }
+    file_names
+}
+
+#[tauri::command]
 async fn write_file(path: &str, contents: &str) -> Result<String, String> {
     println!("Writing file: {}", path);
     match fs::create_dir_all(Path::new(path).parent().unwrap()) {
@@ -52,7 +63,7 @@ fn main() {
                 win.position_traffic_lights(20., 20.);
             }
         })
-        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir, read_dir])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

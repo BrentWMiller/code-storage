@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 // hooks
@@ -52,8 +53,9 @@ const SnippetsList = (props: Props) => {
       </div>
 
       <ul className='flex flex-col'>
-        {filteredSnippets.map(({ path, name, tags }) => (
-          <li key={path} className='block py-5 px-5'>
+        {filteredSnippets.map(({ id, name, tags }) => (
+          <li key={id} className='block py-5 px-5'>
+            <Link href={`/${id}`}>
             <p className='text-base leading-tight font-medium'>{name}</p>
             {tags?.length > 0 ? (
               <div className='flex flex-wrap gap-2 mt-2'>
@@ -66,6 +68,7 @@ const SnippetsList = (props: Props) => {
             ) : (
               <p className='text-xs text-gray-500 italic mt-2'>No tags</p>
             )}
+            </Link>
           </li>
         ))}
       </ul>
