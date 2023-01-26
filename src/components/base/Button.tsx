@@ -7,12 +7,13 @@ type Props = {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   color?: 'primary' | 'default' | 'danger';
+  iconOnly?: boolean;
   href?: string;
   onClick?: () => void;
   [x: string]: any;
 };
 
-const Button = ({ children, type = 'button', color = 'default', href, onClick, ...props }: Props) => {
+const Button = ({ children, type = 'button', color = 'default', iconOnly = false, href, onClick, ...props }: Props) => {
   const {
     settings: { accentColor },
   } = useSettings();
@@ -24,10 +25,12 @@ const Button = ({ children, type = 'button', color = 'default', href, onClick, .
     danger: 'bg-theme-danger text-white',
   };
 
+  const paddingClasses = iconOnly ? 'p-2' : 'px-4 py-2 min-w-[80px]';
+
   return (
     <Element
       {...(href ? { href } : { onClick })}
-      className={clsx('inline-flex justify-center min-w-[80px] px-4 py-2 rounded-lg font-semibold transition-colors duration-300', colorTypes[color])}
+      className={clsx('inline-flex justify-center rounded-lg font-semibold transition-colors duration-300', colorTypes[color], paddingClasses)}
       {...props}
     >
       {children}

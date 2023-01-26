@@ -6,6 +6,12 @@ import toast from 'react-hot-toast';
 import { appConfig } from '../../lib/config';
 import { loadDirContents, readFile } from '../../lib/file-management';
 
+export interface SnippetFileT {
+  name: string;
+  value?: string;
+  extension?: string;
+}
+
 export interface SnippetT {
   id: string;
   title: string;
@@ -13,11 +19,7 @@ export interface SnippetT {
   name: string;
   tags?: string[];
   description?: string;
-  files?: {
-    name: string;
-    value?: string;
-    extension?: string;
-  }[];
+  files?: SnippetFileT[];
 }
 
 interface SnippetsContextT {
@@ -43,14 +45,14 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
         const name = fileName.split('|')[0].trim();
         const id = name.replace(/\s/g, '-').toLowerCase();
         const tagsString = fileName.split('|')[1]?.trim();
-        const tags = tagsString ? tagsString.split(',').map((tag) => tag.trim()) : []
+        const tags = tagsString ? tagsString.split(',').map((tag) => tag.trim()) : [];
 
         return {
           id,
           title: fileName,
           path: `${basePath}/${fileName}`,
           name,
-          tags
+          tags,
         };
       });
 
@@ -78,15 +80,18 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
 
           // Reset files
           snippet.files = [];
-            
+
           if (fileName === appConfig.DEFAULT_README_FILENAME) {
             snippet.description = fileValue;
           } else {
-            snippet.files = [...snippet.files, {
-              name: fileName,
-              value: fileValue,
-              extension: fileName.split('.').pop()
-            }]
+            snippet.files = [
+              ...snippet.files,
+              {
+                name: fileName,
+                value: fileValue,
+                extension: fileName.split('.').pop(),
+              },
+            ];
           }
         }
       }

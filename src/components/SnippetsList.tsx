@@ -36,19 +36,19 @@ const SnippetsList = (props: Props) => {
   }, []);
 
   return (
-    <div className='flex flex-col gap-8 h-full'>
-      <div className='px-5 flex items-center gap-3'>
+    <div className='flex h-full flex-col gap-8'>
+      <div className='flex items-center gap-3 px-5'>
         <div className='relative'>
           <input
             type='text'
             className={clsx(
-              'w-full bg-theme-input py-2 pr-3 pl-10 font-normal rounded-lg text-white border-2 border-theme-divider',
-              `focus:ring-2 outline-none ring-accent-${accentColor}-500`
+              'w-full rounded-lg border-2 border-theme-divider bg-theme-input py-2 pr-3 pl-10 font-normal text-white',
+              `outline-none focus:ring-2 ring-accent-${accentColor}-500`
             )}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <SearchIcon className='absolute top-1/2 -translate-y-1/2 left-3 text-gray-400 w-5 h-5 pointer-events-none' />
+          <SearchIcon className='pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400' />
         </div>
       </div>
 
@@ -56,18 +56,18 @@ const SnippetsList = (props: Props) => {
         {filteredSnippets.map(({ id, name, tags }) => (
           <li key={id} className='block py-5 px-5'>
             <Link href={`/${id}`}>
-            <p className='text-base leading-tight font-medium'>{name}</p>
-            {tags?.length > 0 ? (
-              <div className='flex flex-wrap gap-2 mt-2'>
-                {tags.map((tag) => (
-                  <p key={tag} className={clsx('text-xs px-1.5 py-0.5 rounded-full', `text-white/90 bg-white/10`)}>
-                    {tag}
-                  </p>
-                ))}
-              </div>
-            ) : (
-              <p className='text-xs text-gray-500 italic mt-2'>No tags</p>
-            )}
+              <p className='text-base font-medium leading-tight'>{name}</p>
+              {tags?.length > 0 ? (
+                <div className='mt-2 flex flex-wrap gap-2'>
+                  {tags.map((tag) => (
+                    <p key={tag} className={clsx('rounded-full px-1.5 py-0.5 text-xs', `bg-white/10 text-white/90`)}>
+                      {tag}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p className='mt-2 text-xs italic text-gray-500'>No tags</p>
+              )}
             </Link>
           </li>
         ))}
