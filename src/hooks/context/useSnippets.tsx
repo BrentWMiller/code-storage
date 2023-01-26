@@ -13,7 +13,11 @@ export interface SnippetT {
   name: string;
   tags?: string[];
   description?: string;
-  value?: string;
+  files?: {
+    name: string;
+    value?: string;
+    extension?: string;
+  }[];
 }
 
 interface SnippetsContextT {
@@ -71,11 +75,18 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
         for (const index in files) {
           const fileName = files[index];
           const fileValue = await readFile(fileName, snippet.path);
+
+          // Reset files
+          snippet.files = [];
             
           if (fileName === appConfig.DEFAULT_README_FILENAME) {
             snippet.description = fileValue;
           } else {
-            snippet.value = fileValue;
+            snippet.files = [...snippet.files, {
+              name: fileName,
+              value: fileValue,
+              extension: fileName.split('.').pop()
+            }]
           }
         }
       }
