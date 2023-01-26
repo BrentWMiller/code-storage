@@ -26,11 +26,12 @@ export const saveFile = async (fileName: string, fileContents: any, dir?: string
 };
 
 export const readFile = async (fileName: string, dir?: string): Promise<string | null> => {
-  const path = dir ? `${appConfig.DEFAULT_BASE_FOLDER}/${dir}` : appConfig.DEFAULT_BASE_FOLDER;
-  const fileExists = await exists(`${path}/${fileName}`, { dir: BaseDirectory.Home });
+  const homeDirPath = await invoke('get_home_dir');
+  const path = dir ? `${homeDirPath}/${dir}` : `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}`;
+  const fileExists = await invoke('exists', { path: `${path}/${fileName}` });
 
   if (fileExists) {
-    const fileContents = await readTextFile(`${path}/${fileName}`, { dir: BaseDirectory.Home });
+    const fileContents: string = await invoke('read_file', { path: `${path}/${fileName}` });
     return fileContents;
   } else {
     return null;
@@ -40,7 +41,7 @@ export const readFile = async (fileName: string, dir?: string): Promise<string |
 export const loadDirContents = async (dir?: string): Promise<string[]> => {
   const homeDirPath = await invoke('get_home_dir');
   const path = dir ? `${homeDirPath}/${dir}` : `${homeDirPath}/${appConfig.DEFAULT_BASE_FOLDER}`;
-  const dirExists = await exists(path);
+  const dirExists = await invoke('exists', { path });
 
   if (dirExists) {
     const files: string[] = await invoke('read_dir', { path });

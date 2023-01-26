@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 // hooks
@@ -5,7 +6,7 @@ import useSnippets, { SnippetT } from '../hooks/context/useSnippets';
 
 // components
 import Layout from '../components/global/Layout';
-import { useEffect, useState } from 'react';
+import MarkdownVisualizer from '../components/base/MarkdownVisualizer';
 
 type Props = {
 };
@@ -26,7 +27,8 @@ export default function Snippet({ }: Props) {
   }, [id]);
 
   return (
-    <Layout heading={snippet?.name} description='Testing Snippets' container>
+    <Layout heading={snippet?.name} container>
+      <MarkdownVisualizer markdown={snippet?.description} />
       <pre>{JSON.stringify(snippet, null, 2)}</pre>
     </Layout>
   );

@@ -2,9 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 
 // themes
-import { theme as nightOwlTheme } from '../editor-themes/night-owl';
 import { theme as darkulaTheme } from '../editor-themes/darkula';
-import { theme as monokaiTheme } from '../editor-themes/monokai';
 
 // lib
 import { appConfig } from '../lib/config';
@@ -32,15 +30,11 @@ type MonacoLanguage = {
 };
 
 export enum ThemeOptions {
-  NIGHT_OWL = 'night-owl',
   DARKULA = 'darkula',
-  MONOKAI = 'monokai',
 }
 
 const themeConfigs = {
-  [ThemeOptions.NIGHT_OWL]: nightOwlTheme,
   [ThemeOptions.DARKULA]: darkulaTheme,
-  [ThemeOptions.MONOKAI]: monokaiTheme,
 };
 
 const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
@@ -56,8 +50,6 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
     setLanguages(languages);
 
     monaco.editor.defineTheme(ThemeOptions.DARKULA, themeConfigs[ThemeOptions.DARKULA]);
-    monaco.editor.defineTheme(ThemeOptions.NIGHT_OWL, themeConfigs[ThemeOptions.NIGHT_OWL]);
-    monaco.editor.defineTheme(ThemeOptions.MONOKAI, themeConfigs[ThemeOptions.MONOKAI]);
   }
 
   function handleEditorOnMount(editor, monaco) {

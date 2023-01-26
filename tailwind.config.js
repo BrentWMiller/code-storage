@@ -7,7 +7,11 @@ module.exports = {
   safelist: [
     {
       pattern: /accent-(rose|orange|yellow|emerald|cyan|blue|violet|fuchsia)/,
+      variants: ['prose-headings'],
     },
+    {
+      pattern: /prose-(rose|orange|yellow|emerald|cyan|blue|violet|fuchsia)/,
+    }
   ],
   theme: {
     extend: {
@@ -32,7 +36,14 @@ module.exports = {
           fuchsia: colors.fuchsia,
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.white'),
+          }
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [ require('@tailwindcss/typography') ],
 };

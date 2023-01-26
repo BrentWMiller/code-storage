@@ -9,7 +9,7 @@ type Props = {
 
 const Layout = ({ heading, description, container = false, children }: Props) => {
   return (
-    <section className='relative w-full h-full pt-16'>
+    <section className='relative w-full max-h-full overflow-y-auto pt-16'>
       {(heading || description) && (
         <div className='p-8 pt-0 flex flex-col gap-1.5'>
           {heading && <h1 className='text-3xl font-bold font-heading'>{heading}</h1>}

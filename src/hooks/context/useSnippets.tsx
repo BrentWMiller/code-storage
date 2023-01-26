@@ -1,10 +1,10 @@
-import { FileEntry } from '@tauri-apps/api/fs';
-import { createContext, useContext, useId, useState } from 'react';
+import { invoke } from '@tauri-apps/api';
+import { createContext, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // lib
 import { appConfig } from '../../lib/config';
-import { loadDirContents } from '../../lib/file-management';
+import { loadDirContents, readFile } from '../../lib/file-management';
 
 export interface SnippetT {
   id: string;
@@ -12,6 +12,8 @@ export interface SnippetT {
   path: string;
   name: string;
   tags?: string[];
+  description?: string;
+  value?: string;
 }
 
 interface SnippetsContextT {
@@ -24,13 +26,12 @@ const SnippetsContext = createContext<SnippetsContextT>({} as SnippetsContextT);
 const useSnippets = () => useContext(SnippetsContext);
 
 export const SnippetsProvider = ({ children }: { children: React.ReactNode }) => {
-  const id = useId();
   const [snippets, setSnippets] = useState<SnippetT[]>([]);
 
   const loadSnippets = async () => {
     try {
       const basePath = `${appConfig.DEFAULT_BASE_FOLDER}/${appConfig.DEFAULT_SNIPPETS_FOLDER}`;
-      const files: string[] = await loadDirContents(basePath);
+      const files = await loadDirContents(basePath);
 
       // filter out ignored files
       const filteredFiles = files.filter((path: string) => !appConfig.DEFAULT_FILE_IGNORE_LIST.includes(path));
@@ -64,9 +65,20 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
         throw new Error(`Snippet with id ${id} not found`);
       }
 
-      // // Load snippet contents
-      // const content = await loadDirContents(snippet.path);
-      // console.log(content);
+      // Load snippet contents
+      const files = await loadDirContents(snippet.path);
+      if (files.length > 0) {
+        for (const index in files) {
+          const fileName = files[index];
+          const fileValue = await readFile(fileName, snippet.path);
+            
+          if (fileName === appConfig.DEFAULT_README_FILENAME) {
+            snippet.description = fileValue;
+          } else {
+            snippet.value = fileValue;
+          }
+        }
+      }
 
       return snippet;
     } catch (error) {
