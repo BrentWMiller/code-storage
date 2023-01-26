@@ -16,8 +16,25 @@ use dirs;
 mod window_ext;
 
 #[tauri::command]
-async fn read_file(path: std::path::PathBuf) -> Vec<u8> {
-    fs::read(path).unwrap()
+async fn read_file(path: &str) -> Result<String, String> {
+    println!("Reading file: {}", path);
+    match fs::read_to_string(path) {
+        Ok(contents) => Ok(contents),
+        Err(error) => Err(error.to_string()),
+    }
+}
+
+#[tauri::command]
+async fn write_file(path: &str, contents: &str) -> Result<String, String> {
+    println!("Writing file: {}", path);
+    match fs::create_dir_all(Path::new(path).parent().unwrap()) {
+        Ok(_) => (),
+        Err(error) => return Err(error.to_string()),
+    }
+    match fs::write(path, contents) {
+        Ok(_) => Ok("Success writing file".to_string()),
+        Err(error) => Err(error.to_string()),
+    }
 }
 
 #[tauri::command]
@@ -32,16 +49,8 @@ async fn read_dir(path: std::path::PathBuf) -> Vec<String> {
 }
 
 #[tauri::command]
-async fn write_file(path: &str, contents: &str) -> Result<String, String> {
-    println!("Writing file: {}", path);
-    match fs::create_dir_all(Path::new(path).parent().unwrap()) {
-        Ok(_) => (),
-        Err(error) => return Err(error.to_string()),
-    }
-    match fs::write(path, contents) {
-        Ok(_) => Ok("Success writing file".to_string()),
-        Err(error) => Err(error.to_string()),
-    }
+async fn exists(path: std::path::PathBuf) -> bool {
+    Path::new(&path).exists()
 }
 
 #[tauri::command]
@@ -63,7 +72,7 @@ fn main() {
                 win.position_traffic_lights(20., 20.);
             }
         })
-        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir, read_dir])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir, read_dir, exists])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
