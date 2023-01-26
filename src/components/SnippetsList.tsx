@@ -66,7 +66,7 @@ const SnippetsList = (props: Props) => {
                     <button
                       key={tag}
                       onClick={() => setSearch(tag)}
-                      className={clsx('rounded-full px-1.5 py-0.5 text-xs', `bg-white/10 text-white/90`)}
+                      className='rounded-full bg-white/10 px-1.5 py-0.5 text-xs text-white/90 hover:bg-white/30'
                     >
                       {tag}
                     </button>
