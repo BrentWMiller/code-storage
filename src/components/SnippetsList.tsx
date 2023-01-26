@@ -55,20 +55,27 @@ const SnippetsList = (props: Props) => {
       <ul className='flex flex-col'>
         {filteredSnippets.map(({ id, name, tags }) => (
           <li key={id} className='block py-5 px-5'>
-            <Link href={`/${id}`}>
-              <p className='text-base font-medium leading-tight'>{name}</p>
+            <div>
+              <Link href={`/${id}`} className='text-base font-medium leading-tight hover:underline'>
+                {name}
+              </Link>
+
               {tags?.length > 0 ? (
                 <div className='mt-2 flex flex-wrap gap-2'>
                   {tags.map((tag) => (
-                    <p key={tag} className={clsx('rounded-full px-1.5 py-0.5 text-xs', `bg-white/10 text-white/90`)}>
+                    <button
+                      key={tag}
+                      onClick={() => setSearch(tag)}
+                      className={clsx('rounded-full px-1.5 py-0.5 text-xs', `bg-white/10 text-white/90`)}
+                    >
                       {tag}
-                    </p>
+                    </button>
                   ))}
                 </div>
               ) : (
                 <p className='mt-2 text-xs italic text-gray-500'>No tags</p>
               )}
-            </Link>
+            </div>
           </li>
         ))}
       </ul>
