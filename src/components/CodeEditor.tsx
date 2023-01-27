@@ -43,7 +43,6 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
   const [fileName, setFileName] = useState<string>('');
   const [languages, setLanguages] = useState<MonacoLanguage[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<MonacoLanguage | null>(null);
-  const [currentLanguageIcon, setCurrentLanguageIcon] = useState<string>(`${appConfig.LANGUAGE_ICONS_FOLDER}/default_file.svg`);
 
   function handleEditorWillMount(monaco) {
     const languages = monaco.languages.getLanguages();
@@ -71,48 +70,19 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
       editorRef.current.updateOptions({ language: language.id });
       window.monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], language.id);
       setCurrentLanguage(language);
-      getLanguageIcon(language);
     }
 
     onFileNameChange(fileName);
-  };
-
-  const getLanguageIcon = async (language: MonacoLanguage) => {
-    const defaultIcon = `${appConfig.LANGUAGE_ICONS_FOLDER}/default_file.svg`;
-
-    if (!language) {
-      setCurrentLanguageIcon(defaultIcon);
-      return;
-    }
-
-    const extension = language?.extensions?.[0].replace('.', '');
-    let path = `${appConfig.LANGUAGE_ICONS_FOLDER}/${extension || 'default_file'}.svg`;
-    let res = await fetch(path);
-
-    if (res.status !== 404) {
-      setCurrentLanguageIcon(path);
-    } else {
-      path = `${appConfig.LANGUAGE_ICONS_FOLDER}/${language?.aliases?.[0] || 'default_file'}.svg`;
-      res = await fetch(path);
-
-      if (res.status !== 404) {
-        setCurrentLanguageIcon(path);
-      } else {
-        setCurrentLanguageIcon(defaultIcon);
-      }
-    }
-  };
+  };=
 
   return (
-    <section className='flex flex-col h-full'>
+    <section className='flex h-full flex-col'>
       <header className='flex items-center justify-between bg-theme-sidebar px-8 py-2'>
         <div className='flex items-center gap-3'>
-          <img src={currentLanguageIcon} alt={`Logo for ${currentLanguage}`} className='w-4 h-4' />
-
           <input
             name='file-name'
             type='text'
-            className='bg-transparent appearance-none'
+            className='appearance-none bg-transparent'
             placeholder='Name your file...'
             value={fileName ? fileName : settings.defaultFileName}
             onChange={(e) => handleFileNameChange(e)}
@@ -120,7 +90,7 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
         </div>
       </header>
 
-      <div className='relative flex-shrink-0 h-full p-4'>
+      <div className='relative h-full flex-shrink-0 p-4'>
         <Editor
           width='100%'
           height='90%'
