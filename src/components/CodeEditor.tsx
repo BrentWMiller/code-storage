@@ -77,6 +77,7 @@ const CodeEditor = ({ theme, snippet, onCodeChange, onFileNameChange }: Props) =
     const language = languages.find((language) => language?.extensions?.includes(`.${extension}`));
 
     if (language) {
+      // TODO: Editor language is not updating when switching between files
       editorRef.current.updateOptions({ language: language.id });
       window.monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], language.id);
     }
