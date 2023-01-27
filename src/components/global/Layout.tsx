@@ -3,17 +3,20 @@ import React from 'react';
 type Props = {
   heading?: string;
   description?: string;
+  action?: React.ReactNode;
   tags?: string[];
   container?: boolean;
   children: React.ReactNode;
 };
 
-const Layout = ({ heading, description, tags, container = false, children }: Props) => {
+const Layout = ({ heading, description, action, tags, container = false, children }: Props) => {
   return (
     <section className='relative max-h-full w-full overflow-y-auto pt-16'>
       {(heading || description) && (
         <div className='flex flex-col gap-1.5 p-8 pt-0'>
-          {heading && <h1 className='font-heading text-3xl font-bold'>{heading}</h1>}
+          <div className=' flex items-center justify-between gap-8'>
+            {heading && <h1 className='font-heading text-3xl font-bold'>{heading}</h1>} {action}
+          </div>
           {tags && (
             <div className='flex flex-wrap gap-2'>
               {tags.map((tag) => (

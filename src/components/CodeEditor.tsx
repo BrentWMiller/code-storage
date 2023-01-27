@@ -1,14 +1,12 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 
 // themes
 import { theme as darkulaTheme } from '../editor-themes/darkula';
 
-// lib
-import { appConfig } from '../lib/config';
-
 // hooks
 import useSettings from '../hooks/context/useSettings';
+import { SnippetT } from '../hooks/context/useSnippets';
 
 declare global {
   interface Window {
@@ -18,6 +16,7 @@ declare global {
 
 type Props = {
   theme?: ThemeOptions;
+  snippet?: SnippetT;
   onCodeChange?: (value: string) => void;
   onFileNameChange?: (fileName: string) => void;
 };
@@ -37,12 +36,11 @@ const themeConfigs = {
   [ThemeOptions.DARKULA]: darkulaTheme,
 };
 
-const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
+const CodeEditor = ({ theme, snippet, onCodeChange, onFileNameChange }: Props) => {
   const { settings } = useSettings();
   const editorRef = useRef(null);
-  const [fileName, setFileName] = useState<string>('');
+  const fileNameRef = useRef<HTMLInputElement>(null);
   const [languages, setLanguages] = useState<MonacoLanguage[]>([]);
-  const [currentLanguage, setCurrentLanguage] = useState<MonacoLanguage | null>(null);
 
   function handleEditorWillMount(monaco) {
     const languages = monaco.languages.getLanguages();
@@ -51,14 +49,26 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
     monaco.editor.defineTheme(ThemeOptions.DARKULA, themeConfigs[ThemeOptions.DARKULA]);
   }
 
-  function handleEditorOnMount(editor, monaco) {
+  function handleEditorOnMount(editor) {
     editorRef.current = editor;
+
+    if (snippet?.files?.[0].value) {
+      editor.setValue(snippet.files?.[0].value);
+    }
+
+    if (snippet.files?.[0].name) {
+      fileNameRef.current.value = snippet.files?.[0].name;
+      updateLanguage(snippet.files?.[0].name);
+    }
   }
 
   const handleFileNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fileName = e.currentTarget.value;
-    setFileName(fileName);
+    updateLanguage(fileName);
+    onFileNameChange(fileName);
+  };
 
+  const updateLanguage = (fileName: string) => {
     if (!fileName || !fileName.includes('.')) return;
 
     const extension = fileName.split('.').pop();
@@ -69,25 +79,26 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
     if (language) {
       editorRef.current.updateOptions({ language: language.id });
       window.monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], language.id);
-      setCurrentLanguage(language);
     }
-
-    onFileNameChange(fileName);
   };
+
+  useEffect(() => {
+    if (snippet) {
+      fileNameRef.current.value = snippet.name;
+    }
+  }, [snippet]);
 
   return (
     <section className='flex h-full flex-col'>
-      <header className='flex items-center justify-between bg-theme-sidebar px-8 py-2'>
-        <div className='flex items-center gap-3'>
-          <input
-            name='file-name'
-            type='text'
-            className='appearance-none bg-transparent'
-            placeholder='Name your file...'
-            value={fileName ? fileName : settings.defaultFileName}
-            onChange={(e) => handleFileNameChange(e)}
-          />
-        </div>
+      <header className='flex items-center justify-between gap-3 bg-theme-sidebar/50 px-8 py-4'>
+        <input
+          ref={fileNameRef}
+          name='file-name'
+          type='text'
+          className='appearance-none bg-transparent text-lg font-semibold'
+          placeholder='Name your file...'
+          onChange={(e) => handleFileNameChange(e)}
+        />
       </header>
 
       <div className='relative h-full flex-shrink-0 p-4'>
@@ -99,6 +110,7 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
           onMount={handleEditorOnMount}
           beforeMount={handleEditorWillMount}
           onChange={(value) => onCodeChange(value)}
+          defaultValue='// Write some code...'
           options={{
             fontFamily: 'FiraCode',
             fontSize: 16,

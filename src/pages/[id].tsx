@@ -16,6 +16,8 @@ import ClipboardIcon from '../icons/Clipboard';
 import Layout from '../components/global/Layout';
 import MarkdownVisualizer from '../components/base/MarkdownVisualizer';
 import useSettings from '../hooks/context/useSettings';
+import Button from '../components/base/Button';
+import Link from 'next/link';
 
 type Props = {};
 
@@ -38,7 +40,7 @@ export default function Snippet({}: Props) {
   }, [id]);
 
   return (
-    <Layout heading={snippet?.name} tags={snippet?.tags}>
+    <Layout heading={snippet?.name} tags={snippet?.tags} action={<Link href={`/edit/${snippet.id}`}>Edit</Link>}>
       <div className='px-8 pb-16'>
         <MarkdownVisualizer markdown={snippet?.description} />
       </div>
