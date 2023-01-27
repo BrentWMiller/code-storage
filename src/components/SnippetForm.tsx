@@ -68,8 +68,8 @@ const SnippetsAdd = ({ snippet }: Props) => {
 
   useEffect(() => {
     if (snippet) {
-      form.setValue('title', snippet.title);
-      form.setValue('tags', snippet.tags?.toString() || '');
+      form.setValue('title', snippet.name);
+      form.setValue('tags', snippet.tags?.join(', ') || '');
       form.setValue('description', snippet.description);
       form.setValue('fileName', snippet.files?.[0].name || '');
       form.setValue('fileValue', snippet.files?.[0].value || '');
