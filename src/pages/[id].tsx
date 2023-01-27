@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter/dist/esm/prism-light';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
@@ -16,7 +16,6 @@ import ClipboardIcon from '../icons/Clipboard';
 import Layout from '../components/global/Layout';
 import MarkdownVisualizer from '../components/base/MarkdownVisualizer';
 import useSettings from '../hooks/context/useSettings';
-import Button from '../components/base/Button';
 import Link from 'next/link';
 
 type Props = {};
