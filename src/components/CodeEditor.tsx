@@ -73,7 +73,7 @@ const CodeEditor = ({ theme, onCodeChange, onFileNameChange }: Props) => {
     }
 
     onFileNameChange(fileName);
-  };=
+  };
 
   return (
     <section className='flex h-full flex-col'>
