@@ -54,6 +54,10 @@ const SnippetsAdd = ({ snippet }: Props) => {
     // Generate title with tags after | symbol
     data.title = data.tags !== '' ? `${data.title} | ${data.tags}` : data.title;
 
+    if (snippet) {
+      // TODO: If editing, delete old folder and create new one
+    }
+
     try {
       await checkForAndCreateDir(appConfig.DEFAULT_SNIPPETS_FOLDER);
       await saveFile(`${data.title}/${data.fileName}`, data.fileValue, appConfig.DEFAULT_SNIPPETS_FOLDER);
