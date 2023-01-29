@@ -35,20 +35,22 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
   const [snippets, setSnippets] = useState<SnippetT[]>([]);
 
   const loadSnippets = async () => {
+    setSnippets([]);
+
     try {
       const basePath = `${appConfig.DEFAULT_BASE_FOLDER}/${appConfig.DEFAULT_SNIPPETS_FOLDER}`;
       const files = await loadDirContents(basePath);
 
       // filter out ignored files
       const filteredFiles = files.filter((path: string) => !appConfig.DEFAULT_FILE_IGNORE_LIST.includes(path));
-      const snippets = filteredFiles.map((fileName: string) => {
+      const snippets = filteredFiles.map((fileName: string, index) => {
         const name = fileName.split('|')[0].trim();
         const id = name.replace(/\s/g, '-').toLowerCase();
         const tagsString = fileName.split('|')[1]?.trim();
         const tags = tagsString ? tagsString.split(',').map((tag) => tag.trim()) : [];
 
         return {
-          id,
+          id: `${id}-${index}`,
           title: fileName,
           path: `${basePath}/${fileName}`,
           name,
