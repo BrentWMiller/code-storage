@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "code-storage",
-    "version": "0.0.0"
+    "productName": "Code Storage",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -74,7 +74,7 @@
     },
     "windows": [
       {
-        "fullscreen": true,
+        "fullscreen": false,
         "height": 680,
         "resizable": true,
         "title": "Code Storage",
