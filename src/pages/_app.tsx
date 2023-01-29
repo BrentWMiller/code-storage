@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppProviders>
       <TitleBar />
-      <div className='flex min-h-screen bg-theme-bg max-h-screen overflow-hidden'>
+      <div className='flex max-h-screen min-h-screen overflow-hidden bg-theme-bg'>
         <main className='flex flex-grow text-white'>
           <Sidebar />
 
