@@ -3,6 +3,7 @@ export const appConfig = {
   DEFAULT_LANGUAGE_ID: 'javascript',
   DEFAULT_SNIPPETS_FOLDER: 'snippets',
   DEFAULT_README_FILENAME: 'README.md',
+  DEFAULT_DATA_FILENAME: 'cs.storage.json',
   DEFAULT_FILE_IGNORE_LIST: ['.DS_Store'],
   LANGUAGES: [
     { value: 'javascript', label: 'JavaScript' },
