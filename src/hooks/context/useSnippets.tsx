@@ -37,6 +37,8 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
   const loadSnippets = async () => {
     setSnippets([]);
 
+    // TODO - use the DEFAULT_DATA_FILENAME to better load snippets, contains JSON data
+
     try {
       const basePath = `${appConfig.DEFAULT_BASE_FOLDER}/${appConfig.DEFAULT_SNIPPETS_FOLDER}`;
       const files = await loadDirContents(basePath);
