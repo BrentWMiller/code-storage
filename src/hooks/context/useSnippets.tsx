@@ -67,7 +67,7 @@ export const SnippetsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const loadSnippet = async (id: string): Promise<SnippetT | null> => {
     try {
-      const snippet: SnippetT = snippets.find((snippet) => snippet.id === id);
+      const snippet: SnippetT = snippets.find((snippet) => snippet?.id === id);
 
       if (!snippet) {
         throw new Error(`Snippet with id ${id} not found`);
