@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 // lib
-import { checkForAndCreateDir, saveFile } from '../lib/file-management';
+import { checkForAndCreateDir, removeDir, saveFile } from '../lib/file-management';
 import { appConfig } from '../lib/config';
 
 // hooks
@@ -15,7 +17,6 @@ import CodeEditor from '../components/CodeEditor';
 import ActionBar from '../components/global/ActionBar';
 import Button from '../components/base/Button';
 import TextArea from '../components/base/TextArea';
-import { useEffect } from 'react';
 
 type Props = {
   snippet?: SnippetT;
@@ -30,7 +31,8 @@ type Form = {
 };
 
 const SnippetsAdd = ({ snippet }: Props) => {
-  const { loadSnippets } = useSnippets();
+  const router = useRouter();
+  const { loadSnippets, loadSnippet } = useSnippets();
 
   const form = useForm<Form>({
     defaultValues: {
@@ -52,18 +54,23 @@ const SnippetsAdd = ({ snippet }: Props) => {
 
   const handleSubmit: SubmitHandler<Form> = async (data) => {
     // Generate title with tags after | symbol
-    data.title = data.tags !== '' ? `${data.title} | ${data.tags}` : data.title;
-
-    if (snippet) {
-      // TODO: If editing, delete old folder and create new one
-    }
+    const titleWithTags = data.tags !== '' ? `${data.title} | ${data.tags}` : data.title;
 
     try {
       await checkForAndCreateDir(appConfig.DEFAULT_SNIPPETS_FOLDER);
-      await saveFile(`${data.title}/${data.fileName}`, data.fileValue, appConfig.DEFAULT_SNIPPETS_FOLDER);
-      await saveFile(`${data.title}/${appConfig.DEFAULT_README_FILENAME}`, data.description, appConfig.DEFAULT_SNIPPETS_FOLDER);
+      await saveFile(`${titleWithTags}/${data.fileName}`, data.fileValue, appConfig.DEFAULT_SNIPPETS_FOLDER);
+      await saveFile(`${titleWithTags}/${appConfig.DEFAULT_README_FILENAME}`, data.description, appConfig.DEFAULT_SNIPPETS_FOLDER);
+      await saveFile(`${titleWithTags}/${appConfig.DEFAULT_DATA_FILENAME}`, JSON.stringify(data), appConfig.DEFAULT_SNIPPETS_FOLDER);
+
+      if (snippet) {
+        // Remove old snippet folder if it exists
+        await removeDir(snippet.path);
+      }
+
       toast.success('File saved successfully');
-      loadSnippets();
+      await loadSnippets();
+
+      router.push('/');
     } catch (error) {
       console.error(error);
       toast.error('Failed to save file');
@@ -75,8 +82,8 @@ const SnippetsAdd = ({ snippet }: Props) => {
       form.setValue('title', snippet.name);
       form.setValue('tags', snippet.tags?.join(', ') || '');
       form.setValue('description', snippet.description);
-      form.setValue('fileName', snippet.files?.[0].name || '');
-      form.setValue('fileValue', snippet.files?.[0].value || '');
+      form.setValue('fileName', snippet.files?.[0]?.name || '');
+      form.setValue('fileValue', snippet.files?.[0]?.value || '');
     }
   }, [snippet]);
 
@@ -90,7 +97,7 @@ const SnippetsAdd = ({ snippet }: Props) => {
       <CodeEditor onCodeChange={handleCodeEditorChange} onFileNameChange={handleFileNameChange} snippet={snippet} />
 
       <ActionBar>
-        <Button href='/snippets'>Cancel</Button>
+        <Button href={`/${snippet?.id ? snippet.id : ''}`}>Cancel</Button>
         <Button type='submit' color='primary'>
           Save
         </Button>
