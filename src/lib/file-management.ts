@@ -50,3 +50,15 @@ export const loadDirContents = async (dir?: string): Promise<string[]> => {
     return [];
   }
 };
+
+export const removeDir = async (dir: string): Promise<boolean> => {
+  try {
+    const homeDirPath = await invoke('get_home_dir');
+    const path = `${homeDirPath}/${dir}`;
+
+    await invoke('remove_dir', { path, recursive: true });
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};

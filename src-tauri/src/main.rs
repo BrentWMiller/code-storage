@@ -48,6 +48,15 @@ async fn read_dir(path: std::path::PathBuf) -> Vec<String> {
     file_names
 }
 
+// delete directory
+#[tauri::command]
+async fn remove_dir(path: std::path::PathBuf) -> Result<String, String> {
+    match fs::remove_dir_all(path) {
+        Ok(_) => Ok("Success deleting directory".to_string()),
+        Err(error) => Err(error.to_string()),
+    }
+}
+
 #[tauri::command]
 async fn exists(path: std::path::PathBuf) -> bool {
     Path::new(&path).exists()
@@ -72,7 +81,7 @@ fn main() {
                 win.position_traffic_lights(20., 20.);
             }
         })
-        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir, read_dir, exists])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, get_home_dir, read_dir, remove_dir, exists])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
