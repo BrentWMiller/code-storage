@@ -39,7 +39,7 @@ export default function Snippet({}: Props) {
   }, [id]);
 
   return (
-    <Layout heading={snippet?.name} tags={snippet?.tags} action={<Link href={`/edit/${snippet.id}`}>Edit</Link>}>
+    <Layout heading={snippet?.name} tags={snippet?.tags} action={<Link href={`/edit/${snippet?.id}`}>Edit</Link>}>
       <div className='px-8 pb-16'>
         <MarkdownVisualizer markdown={snippet?.description} />
       </div>
