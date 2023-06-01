@@ -52,11 +52,11 @@ const CodeEditor = ({ theme, snippet, onCodeChange, onFileNameChange }: Props) =
   function handleEditorOnMount(editor) {
     editorRef.current = editor;
 
-    if (snippet?.files?.[0].value) {
+    if (snippet?.files?.[0]?.value) {
       editor.setValue(snippet.files?.[0].value);
     }
 
-    if (snippet?.files?.[0].name) {
+    if (snippet?.files?.[0]?.name) {
       fileNameRef.current.value = snippet.files?.[0].name;
       updateLanguage(snippet.files?.[0].name);
     }
